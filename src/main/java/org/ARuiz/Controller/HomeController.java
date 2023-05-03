@@ -1,12 +1,13 @@
-package org.ARuiz;
+package org.ARuiz.Controller;
 
 import java.io.IOException;
 import javafx.fxml.FXML;
+import org.ARuiz.App;
 
-public class SecondaryController {
+public class HomeController {
 
     @FXML
     private void switchToPrimary() throws IOException {
-        App.setRoot("primary");
+        App.setRoot("login");
     }
 }
