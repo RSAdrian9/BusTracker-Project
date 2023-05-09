@@ -14,7 +14,7 @@ public class ConnectionMySQL {
     private static Connection con;
 
     private ConnectionMySQL() {
-        ConecctionData cd = loadXML();
+        ConnectionData cd = loadXML();
 
         try {
             con = DriverManager.getConnection(cd.getServer()+"/"+cd.getDatabase(),cd.getUsername(),cd.getPassword());
@@ -31,13 +31,13 @@ public class ConnectionMySQL {
         return con;
     }
 
-    public ConecctionData loadXML() {
-        ConecctionData con = new ConecctionData();
+    public ConnectionData loadXML() {
+        ConnectionData con = new ConnectionData();
         JAXBContext jaxbContext;
         try{
-            jaxbContext = JAXBContext.newInstance(ConecctionData.class);
+            jaxbContext = JAXBContext.newInstance(ConnectionData.class);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-            con = (ConecctionData) jaxbUnmarshaller.unmarshal(new File(file));
+            con = (ConnectionData) jaxbUnmarshaller.unmarshal(new File(file));
         } catch (JAXBException e) {
             throw new RuntimeException(e);
         }

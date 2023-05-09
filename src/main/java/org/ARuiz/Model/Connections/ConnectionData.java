@@ -6,14 +6,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 @XmlRootElement(name = "conexion")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class ConecctionData implements Serializable {
+public class ConnectionData implements Serializable {
     private static final long serialVersionUID=1L;
     private String server;
     private String database;
     private String username;
     private String password;
 
-    public ConecctionData() {
+    public ConnectionData() {
         this.server="";
         this.database="";
         this.username="";
