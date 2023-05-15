@@ -24,11 +24,11 @@ public class ConnectionMySQL {
         }
     }
 
-    public static Connection getConnect() {
+    public static ConnectionData getConnect() {
         if(_newInstance==null){
             _newInstance=new ConnectionMySQL();
         }
-        return con;
+        return (ConnectionData) con;
     }
 
     public ConnectionData loadXML() {
