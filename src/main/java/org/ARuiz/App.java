@@ -10,12 +10,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ConnectionMySQL {
+public class App {
     private String file = "conexion.xml";
-    private static ConnectionMySQL _newInstance;
+    private static App _newInstance;
     private static Connection con;
 
-    private ConnectionMySQL() {
+    private App() {
         ConnectionData cd = loadXML();
 
         try {
@@ -28,7 +28,7 @@ public class ConnectionMySQL {
 
     public static Connection getConnect() {
         if(_newInstance==null){
-            _newInstance=new ConnectionMySQL();
+            _newInstance=new App();
         }
         return con;
     }
