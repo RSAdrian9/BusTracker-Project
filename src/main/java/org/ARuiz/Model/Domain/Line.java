@@ -10,8 +10,8 @@ public class Line {
     private String route;
     private LocalTime timetable;
 
-    public Line(int id, String line_name, String place, String route, String timetable) {
-        this.id = id;
+    public Line(int id_bus, String line_name, int place, String route, LocalTime timetable) {
+        this.id_bus = id_bus;
         this.line_name = line_name;
         this.place = place;
         this.route = route;
@@ -38,11 +38,11 @@ public class Line {
         this.line_name = line_name;
     }
 
-    public String getPlace() {
+    public int getPlace() {
         return place;
     }
 
-    public void setPlace(String place) {
+    public void setPlace(int place) {
         this.place = place;
     }
 

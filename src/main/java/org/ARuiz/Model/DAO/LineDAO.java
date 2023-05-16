@@ -11,10 +11,10 @@ import java.util.List;
 
 public class LineDAO implements DAO<Line> {
     private final static String FINDALL = "SELECT * FROM line";
-    private final static String FINDBYID = "SELECT * FROM line WHERE id = ?";
+    private final static String FINDBYID = "SELECT * FROM line WHERE id_bus = ?";
     private final static String INSERT = "INSERT INTO line (line_name, place, route, timetable) VALUES (?, ?, ?, ?)";
-    private final static String DELETE = "DELETE FROM line WHERE id = ?";
-    private final static String UPDATE = "UPDATE line SET line_name = ?, place = ?, route = ?, timetable = ? WHERE id = ?";
+    private final static String DELETE = "DELETE FROM line WHERE id_bus = ?";
+    private final static String UPDATE = "UPDATE line SET line_name = ?, place = ?, route = ?, timetable = ? WHERE id_bus = ?";
 
     private Connection conn;
 
