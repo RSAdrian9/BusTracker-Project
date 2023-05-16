@@ -1,13 +1,14 @@
 package org.ARuiz.Model.Domain;
 
+import java.time.LocalTime;
 import java.util.Objects;
 
 public class Line {
-    private int id;
+    private int id_bus;
     private String line_name;
-    private String place;
+    private int place;
     private String route;
-    private String timetable;
+    private LocalTime timetable;
 
     public Line(int id, String line_name, String place, String route, String timetable) {
         this.id = id;
@@ -21,12 +22,12 @@ public class Line {
 
     }
 
-    public int getId() {
-        return id;
+    public int getId_bus() {
+        return id_bus;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId_bus(int id_bus) {
+        this.id_bus = id_bus;
     }
 
     public String getLine_name() {
@@ -53,11 +54,11 @@ public class Line {
         this.route = route;
     }
 
-    public String getTimetable() {
+    public LocalTime getTimetable() {
         return timetable;
     }
 
-    public void setTimetable(String timetable) {
+    public void setTimetable(LocalTime timetable) {
         this.timetable = timetable;
     }
 
@@ -68,18 +69,18 @@ public class Line {
 
         Line line = (Line) o;
 
-        if (id != line.id) return false;
+        if (id_bus != line.id_bus) return false;
+        if (place != line.place) return false;
         if (!Objects.equals(line_name, line.line_name)) return false;
-        if (!Objects.equals(place, line.place)) return false;
         if (!Objects.equals(route, line.route)) return false;
         return Objects.equals(timetable, line.timetable);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = id_bus;
         result = 31 * result + (line_name != null ? line_name.hashCode() : 0);
-        result = 31 * result + (place != null ? place.hashCode() : 0);
+        result = 31 * result + place;
         result = 31 * result + (route != null ? route.hashCode() : 0);
         result = 31 * result + (timetable != null ? timetable.hashCode() : 0);
         return result;
@@ -88,11 +89,11 @@ public class Line {
     @Override
     public String toString() {
         return "Line{" +
-                "id=" + id +
+                "id_bus=" + id_bus +
                 ", line_name='" + line_name + '\'' +
-                ", place='" + place + '\'' +
+                ", place=" + place +
                 ", route='" + route + '\'' +
-                ", timetable='" + timetable + '\'' +
+                ", timetable=" + timetable +
                 '}';
     }
 }

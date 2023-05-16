@@ -25,10 +25,10 @@ public class ConnectionMySQL {
     }
 
     public static ConnectionData getConnect() {
-        if(_newInstance==null){
-            _newInstance=new ConnectionMySQL();
+        if (_newInstance == null) {
+            _newInstance = new ConnectionMySQL();
         }
-        return (ConnectionData) con;
+        return _newInstance.loadXML();
     }
 
     public ConnectionData loadXML() {

@@ -1,50 +1,24 @@
 package org.ARuiz;
 
-import org.ARuiz.Model.Connections.ConnectionData;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+public class App extends Application {
 
-public class App {
-    private String file = "conexion.xml";
-    private static App _newInstance;
-    private static Connection con;
-
-    private App() {
-        ConnectionData cd = loadXML();
-
-        try {
-            con = DriverManager.getConnection(cd.getServer()+"/"+cd.getDatabase(),cd.getUsername(),cd.getPassword());
-        } catch (SQLException e) {
-            con=null;
-            throw new RuntimeException(e);
-        }
+    @Override
+    public void start(Stage primaryStage) throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+        primaryStage.setTitle("BusTracker");
+        primaryStage.setScene(new Scene(root, 400, 560));
+        primaryStage.show();
     }
 
-    public static Connection getConnect() {
-        if(_newInstance==null){
-            _newInstance=new App();
-        }
-        return con;
+
+    public static void main(String[] args) {
+
+        launch(args);
     }
-
-    public ConnectionData loadXML() {
-        ConnectionData con = new ConnectionData();
-        JAXBContext jaxbContext;
-        try{
-            jaxbContext = JAXBContext.newInstance(ConnectionData.class);
-            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-            con = (ConnectionData) jaxbUnmarshaller.unmarshal(new File(file));
-        } catch (JAXBException e) {
-            throw new RuntimeException(e);
-        }
-
-        return con;
-    }
-
 }
