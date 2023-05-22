@@ -16,66 +16,81 @@ public class TestLineDAO {
         String user = "root";
         String pwd = "";
 
-        try (Connection connection = DriverManager.getConnection(url, user, pwd)) {
+        try (Connection con = DriverManager.getConnection(url, user, pwd)) {
 
-            LineDAO lineDAO = new LineDAO(connection);
-            /*
-            // Crear una nueva línea
-            Line newLine1 = new Line();
-            newLine1.setLine_name("Línea 1");
-            newLine1.setPlace(1);
-            newLine1.setRoute("Ruta 1");
-            newLine1.setTimetable(LocalTime.of(10, 0));
+            LineDAO lineDAO = new LineDAO(con);
 
-            // Insertar la nueva línea
-            Line insertedLine1 = lineDAO.insert(newLine1);
+            // Crear y insertar una nueva línea
+            Line newLine1 = createLine("Línea 1", 1, "Ruta 1", LocalTime.of(10, 0));
+            Line insertedLine1 = insertLine(lineDAO, newLine1);
             System.out.println("Línea insertada 1: " + insertedLine1);
 
-            // Crear otra línea
-            Line newLine2 = new Line();
-            newLine2.setLine_name("Línea 2");
-            newLine2.setPlace(2);
-            newLine2.setRoute("Ruta 2");
-            newLine2.setTimetable(LocalTime.of(12, 0));
+            // Imprimir un párrafo en blanco
+            System.out.println();
 
-            // Insertar la otra línea
-            Line insertedLine2 = lineDAO.insert(newLine2);
+            // Crear y insertar otra línea
+            Line newLine2 = createLine("Línea 2", 2, "Ruta 2", LocalTime.of(12, 0));
+            Line insertedLine2 = insertLine(lineDAO, newLine2);
             System.out.println("Línea insertada 2: " + insertedLine2);
+
+            // Imprimir un párrafo en blanco
+            System.out.println();
 
             // Obtener todas las líneas
             List<Line> allLines = lineDAO.findAll();
             System.out.println("Lista de líneas:");
             for (Line line : allLines) {
                 System.out.println(line);
+
             }
 
-            /*
+            // Imprimir un párrafo en blanco
+            System.out.println();
+
             // Obtener una línea por su ID
-            int lineId = 1;
-            Line lineById = lineDAO.findById(String.valueOf(lineId));
+            int lineId = 10;
+            Line lineById = lineDAO.findById(Integer.valueOf(lineId));
             if (lineById != null) {
                 System.out.println("Línea encontrada por ID: " + lineById);
             } else {
                 System.out.println("No se encontró ninguna línea con el ID: " + lineId);
             }
-*/
-            int lineId = 3;
-            Line lineById = lineDAO.findById(String.valueOf(lineId));
+
+            // Imprimir un párrafo en blanco
+            System.out.println();
 
             // Actualizar la primera línea
-            lineById.setLine_name("Línea 1 actualizada");
-            lineById.setPlace(3);
-            lineById.setRoute("Ruta 1 actualizada");
-            lineById.setTimetable(LocalTime.of(15, 0)); // Establecer el nuevo horario
+            updateLine(lineById, "Línea 1 actualizada", 3, "Ruta 1 actualizada", LocalTime.of(15, 0));
             Line updatedLine1 = lineDAO.update(lineById);
             System.out.println("Línea actualizada 1: " + updatedLine1);
 
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
+
+    private static Line createLine(String lineName, int place, String route, LocalTime timetable) {
+        Line line = new Line();
+        line.setLine_name(lineName);
+        line.setPlace(place);
+        line.setRoute(route);
+        line.setTimetable(timetable);
+        return line;
+    }
+
+    private static Line insertLine(LineDAO lineDAO, Line line) throws SQLException {
+        Line insertedLine = lineDAO.insert(line);
+        System.out.println();
+        return insertedLine;
+    }
+
+    private static void updateLine(Line line, String lineName, int place, String route, LocalTime timetable) {
+        line.setLine_name(lineName);
+        line.setPlace(place);
+        line.setRoute(route);
+        line.setTimetable(timetable);
+    }
 }
+
 
 
