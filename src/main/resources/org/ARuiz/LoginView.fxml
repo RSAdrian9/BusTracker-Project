@@ -8,8 +8,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="560.0" prefWidth="400.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ARuiz.Controller.LoginController">
-   <Button fx:id="btn_login" alignment="CENTER" layoutX="154.0" layoutY="431.0" mnemonicParsing="false" onMouseClicked="#btnLoginValidate" prefHeight="30.0" prefWidth="91.0" style="-fx-background-color: #0000FF; -fx-padding: 6;" text="Log in" textFill="WHITE" AnchorPane.leftAnchor="154.0" AnchorPane.rightAnchor="154.8">
+<AnchorPane prefHeight="560.0" prefWidth="400.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ARuiz.LoginController">
+   <Button alignment="CENTER" layoutX="154.0" layoutY="431.0" mnemonicParsing="false" onAction="#btnLoginValidate" onMouseClicked="#btnLoginValidate" prefHeight="30.0" prefWidth="91.0" style="-fx-background-color: #0000FF; -fx-padding: 6;" text="Log in" textFill="WHITE" AnchorPane.leftAnchor="154.0" AnchorPane.rightAnchor="154.8">
       <font>
          <Font name="System Bold" size="12.0" />
       </font>
@@ -17,7 +17,7 @@
          <Cursor fx:constant="HAND" />
       </cursor>
    </Button>
-   <Button fx:id="btn_signup" alignment="CENTER" layoutX="224.0" layoutY="502.0" mnemonicParsing="false" onMouseClicked="#btnSignupValidate" prefHeight="30.0" prefWidth="66.0" style="-fx-background-color: none; -fx-padding: 6;" text="Sign up" textFill="#5f5fff" AnchorPane.leftAnchor="223.6">
+   <Button fx:id="btn_signup" alignment="CENTER" layoutX="224.0" layoutY="502.0" mnemonicParsing="false" onAction="#btnSignupValidate" onMouseClicked="#btnSignupValidate" prefHeight="30.0" prefWidth="66.0" style="-fx-background-color: none; -fx-padding: 6;" text="Sign up" textFill="#5f5fff" AnchorPane.leftAnchor="223.6">
       <font>
          <Font name="System Bold" size="12.0" />
       </font>
@@ -41,12 +41,12 @@
          <Cursor fx:constant="TEXT" />
       </cursor>
    </Label>
-   <TextField fx:id="txtfld_username" alignment="CENTER" layoutX="31.0" layoutY="258.0" onMouseClicked="#txtfldOnClick" prefHeight="30.0" prefWidth="266.0" promptText="user" style="-fx-border-style: solid; -fx-border-color: grey; -fx-border-radius: 4; -fx-border-width: 2;" AnchorPane.leftAnchor="31.0" AnchorPane.rightAnchor="31.0">
+   <TextField fx:id="txtfld_username" alignment="CENTER" layoutX="31.0" layoutY="258.0" prefHeight="30.0" prefWidth="266.0" promptText="user" style="-fx-border-style: solid; -fx-border-color: grey; -fx-border-radius: 4; -fx-border-width: 2;" text="Adrian" AnchorPane.leftAnchor="31.0" AnchorPane.rightAnchor="31.0">
       <cursor>
          <Cursor fx:constant="TEXT" />
       </cursor>
    </TextField>
-   <PasswordField fx:id="txtfld_password" alignment="CENTER" layoutX="33.0" layoutY="343.0" onMouseClicked="#txtfldOnClick" prefHeight="30.0" prefWidth="338.0" promptText="password" style="-fx-border-style: solid; -fx-border-color: grey; -fx-border-radius: 4; -fx-border-width: 2;" AnchorPane.leftAnchor="33.0" AnchorPane.rightAnchor="28.600000000000023">
+   <PasswordField fx:id="txtfld_password" alignment="CENTER" layoutX="33.0" layoutY="343.0" prefHeight="30.0" prefWidth="338.0" promptText="password" style="-fx-border-style: solid; -fx-border-color: grey; -fx-border-radius: 4; -fx-border-width: 2;" text="1234" AnchorPane.leftAnchor="33.0" AnchorPane.rightAnchor="28.600000000000023">
       <cursor>
          <Cursor fx:constant="TEXT" />
       </cursor></PasswordField>
