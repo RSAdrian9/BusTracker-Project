@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ARuiz.LineControllerUser">
+   <children>
+      <TableView layoutX="16.0" layoutY="123.0" prefHeight="462.0" prefWidth="870.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="Id" />
+          <TableColumn prefWidth="169.59996795654297" text="Nombre" />
+            <TableColumn prefWidth="243.20004272460938" text="Place" />
+            <TableColumn prefWidth="248.80001831054688" text="Route" />
+            <TableColumn prefWidth="145.5999755859375" text="TimeTable" />
+        </columns>
+      </TableView>
+      <Button layoutX="428.0" layoutY="29.0" mnemonicParsing="false" text="Inicio" />
+      <TextField layoutX="768.0" layoutY="29.0" prefHeight="26.0" prefWidth="117.0" promptText="ID User" />
+      <Button layoutX="14.0" layoutY="30.0" mnemonicParsing="false" text="Refresh" />
+   </children>
+</AnchorPane>
