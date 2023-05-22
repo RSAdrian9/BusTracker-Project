@@ -5,7 +5,11 @@ module org.ARuiz {
     requires java.xml.bind;
 
     opens org.ARuiz to javafx.fxml;
+    opens org.ARuiz.Model.Connections to java.xml.bind;
     exports org.ARuiz;
-    exports org.ARuiz.Controller;
-    opens org.ARuiz.Controller to javafx.fxml;
+    opens org.ARuiz.Model.Domain to javafx.base;
+    exports  org.ARuiz.Model.Domain;
+    exports org.ARuiz.Util;
+
+
 }
