@@ -1,4 +1,4 @@
-package org.ARuiz.Controller;
+package org.ARuiz;
 
 public class SignUpController {
 
