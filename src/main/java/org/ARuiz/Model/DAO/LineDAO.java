@@ -1,8 +1,8 @@
 package org.ARuiz.Model.DAO;
 
-import org.ARuiz.Model.Connections.ConnectionData;
 import org.ARuiz.Model.Connections.ConnectionMySQL;
 import org.ARuiz.Model.Domain.Line;
+import org.ARuiz.Model.Domain.StopAdmin;
 
 import java.sql.*;
 import java.time.LocalTime;
@@ -16,16 +16,21 @@ public class LineDAO implements DAO<Line> {
     private final static String DELETE = "DELETE FROM line WHERE id_bus = ?";
     private final static String UPDATE = "UPDATE line SET line_name = ?, place = ?, route = ?, timetable = ? WHERE id_bus = ?";
 
-    private Connection conn;
+    private Connection con;
 
-    public LineDAO(Connection conn) {
-        this.conn = conn;
+    public LineDAO(Connection con) {
+
+        this.con = con;
+    }
+
+    public LineDAO() {
+        this.con = ConnectionMySQL.getConnect();
     }
 
     @Override
     public List<Line> findAll() throws SQLException {
         List<Line> lines = new ArrayList<>();
-        try (PreparedStatement pst = conn.prepareStatement(FINDALL);
+        try (PreparedStatement pst = con.prepareStatement(FINDALL);
              ResultSet rs = pst.executeQuery()) {
             while (rs.next()) {
                 Line line = new Line();
@@ -40,10 +45,11 @@ public class LineDAO implements DAO<Line> {
         return lines;
     }
 
+
     @Override
-    public Line findById(String id) throws SQLException {
-        try (PreparedStatement pst = conn.prepareStatement(FINDBYID)) {
-            pst.setString(1, id);
+    public Line findById(int id) throws SQLException {
+        try (PreparedStatement pst = con.prepareStatement(FINDBYID)) {
+            pst.setInt(1, id);
             try (ResultSet rs = pst.executeQuery()) {
                 if (rs.next()) {
                     Line line = new Line();
@@ -61,7 +67,7 @@ public class LineDAO implements DAO<Line> {
 
     @Override
     public Line insert(Line entity) throws SQLException {
-        try (PreparedStatement pst = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement pst = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)) {
             pst.setString(1, entity.getLine_name());
             pst.setInt(2, entity.getPlace());
             pst.setString(3, entity.getRoute());
@@ -85,7 +91,7 @@ public class LineDAO implements DAO<Line> {
 
     @Override
     public void delete(Line entity) throws SQLException {
-        try (PreparedStatement pst = conn.prepareStatement(DELETE)) {
+        try (PreparedStatement pst = con.prepareStatement(DELETE)) {
             pst.setInt(1, entity.getId_bus());
             pst.executeUpdate();
         }
@@ -93,7 +99,7 @@ public class LineDAO implements DAO<Line> {
 
     @Override
     public Line update(Line entity) throws SQLException {
-        try (PreparedStatement pst = conn.prepareStatement(UPDATE)) {
+        try (PreparedStatement pst = con.prepareStatement(UPDATE)) {
             pst.setString(1, entity.getLine_name());
             pst.setInt(2, entity.getPlace());
             pst.setString(3, entity.getRoute());
@@ -110,8 +116,8 @@ public class LineDAO implements DAO<Line> {
 
     @Override
     public void close() throws Exception {
-        if (conn != null) {
-            conn.close();
+        if (con != null) {
+            con.close();
         }
     }
 
