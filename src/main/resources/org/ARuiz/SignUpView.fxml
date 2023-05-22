@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="560.0" prefWidth="400.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ARuiz.Controller.SignUpController">
+<AnchorPane prefHeight="560.0" prefWidth="400.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ARuiz.SignUpController">
    <Button fx:id="btn_signup" alignment="CENTER" layoutX="155.0" layoutY="452.0" mnemonicParsing="false" onMouseClicked="#btnLoginValidate" prefHeight="30.0" prefWidth="91.0" style="-fx-background-color: #0000FF; -fx-padding: 6;" text="Sign up" textFill="WHITE" AnchorPane.leftAnchor="155.0" AnchorPane.rightAnchor="153.8">
       <font>
          <Font name="System Bold" size="12.0" />

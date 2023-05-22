@@ -1,5 +1,6 @@
 package org.ARuiz.Model.Connections;
 
+import org.ARuiz.Model.Connections.ConnectionData;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -24,11 +25,11 @@ public class ConnectionMySQL {
         }
     }
 
-    public static ConnectionData getConnect() {
-        if (_newInstance == null) {
-            _newInstance = new ConnectionMySQL();
+    public static Connection getConnect() {
+        if(_newInstance==null){
+            _newInstance=new ConnectionMySQL();
         }
-        return _newInstance.loadXML();
+        return con;
     }
 
     public ConnectionData loadXML() {

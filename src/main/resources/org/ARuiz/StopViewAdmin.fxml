@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ARuiz.StopControllerAdmin">
+    <children>
+        <Label fx:id="lbl_title" layoutX="354.0" layoutY="22.0" onDragDetected="#showHome" text="BUS TRACKER">
+            <font>
+                <Font name="Open Sans" size="30.0" />
+            </font>
+        </Label>
+        <TableView fx:id="tableViewStops" layoutX="16.0" layoutY="123.0" prefHeight="462.0" prefWidth="631.0">
+            <columns>
+                <TableColumn fx:id="idColumn" prefWidth="122.39998817443848" text="Id" />
+                <TableColumn fx:id="nameColumn" prefWidth="508.0000305175781" text="Name" />
+            </columns>
+        </TableView>
+        <Button fx:id="btnHome" layoutX="14.0" layoutY="31.0" mnemonicParsing="false" onAction="#showHome" text="Back" />
+        <Button fx:id="btnRefresh" layoutX="14.0" layoutY="64.0" mnemonicParsing="false" onAction="#refreshLineView" text="Refresh" />
+        <Button fx:id="btnAdd" layoutX="682.0" layoutY="453.0" mnemonicParsing="false" onAction="#addStop" prefHeight="34.0" prefWidth="56.0" text="Add" />
+        <Button fx:id="btnDelete" layoutX="820.0" layoutY="453.0" mnemonicParsing="false" onAction="#deleteStop" prefHeight="34.0" prefWidth="56.0" text="Delete" />
+        <Button fx:id="btnUpdate" layoutX="751.0" layoutY="508.0" mnemonicParsing="false" onAction="#updateStop" prefHeight="34.0" prefWidth="56.0" text="Update" />
+        <Label fx:id="lbl_idAdmin" layoutX="768.0" layoutY="29.0" prefHeight="26.0" prefWidth="118.0" text="ID Admin" textAlignment="CENTER" />
+        <TextField fx:id="txtfld_name" layoutX="682.0" layoutY="300.0" prefHeight="26.0" prefWidth="194.0" />
+        <TextField fx:id="txtfld_searchId" layoutX="682.0" layoutY="151.0" prefHeight="26.0" prefWidth="82.0" />
+        <Button fx:id="btnSearch" layoutX="786.0" layoutY="151.0" mnemonicParsing="false" onAction="#searchIdStop" prefHeight="26.0" prefWidth="82.0" text="🔍 Search " />
+        <Label fx:id="lbl_name" layoutX="682.0" layoutY="259.0" text="Name" />
+    </children>
+</AnchorPane>
