@@ -23,8 +23,9 @@ public class DepartureTimeDAO implements DAO<DepartureTime>{
     }
 
     @Override
-    public void delete(DepartureTime entity) throws SQLException {
+    public StopAdmin delete(DepartureTime entity) throws SQLException {
 
+        return null;
     }
 
     @Override

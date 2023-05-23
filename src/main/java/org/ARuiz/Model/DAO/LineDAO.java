@@ -90,11 +90,12 @@ public class LineDAO implements DAO<Line> {
     }
 
     @Override
-    public void delete(Line entity) throws SQLException {
+    public StopAdmin delete(Line entity) throws SQLException {
         try (PreparedStatement pst = con.prepareStatement(DELETE)) {
             pst.setInt(1, entity.getId_bus());
             pst.executeUpdate();
         }
+        return null;
     }
 
     @Override
