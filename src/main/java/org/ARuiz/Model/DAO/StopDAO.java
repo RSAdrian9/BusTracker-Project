@@ -62,6 +62,7 @@ public class StopDAO implements DAO<StopAdmin> {
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 StopAdmin stop = new StopAdmin(
+                        rs.getInt("id_stop"),
                         rs.getString("name")
                 );
                 stops.add(stop);
@@ -84,7 +85,7 @@ public class StopDAO implements DAO<StopAdmin> {
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
                 stop = new StopAdmin(
-                        rs.getString("name")
+                        rs.getInt(1), rs.getString("name")
                 );
             }
         }
@@ -157,7 +158,7 @@ public class StopDAO implements DAO<StopAdmin> {
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
                 return new StopAdmin(
-                        rs.getString("name")
+                        rs.getInt("1"), rs.getString("name")
                 );
             }
             return null;

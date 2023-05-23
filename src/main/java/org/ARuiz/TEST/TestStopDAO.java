@@ -32,12 +32,14 @@ public class TestStopDAO {
             } else {
                 System.out.println("No se encontró ninguna parada con ID " + id);
             }
-
+            /*
             // Prueba de insert()
             String newStopName = "Nueva Parada";
-            StopAdmin newStop = new StopAdmin(newStopName);
+            StopAdmin newStop = new StopAdmin(rs.getInt(1), newStopName);
             StopAdmin insertedStop = stopDAO. insert(newStop);
             System.out.println("Nueva parada insertada: " + insertedStop.getName());
+
+             */
 
             // Prueba de update()
             int updateId = 1; // ID de parada a actualizar
@@ -52,7 +54,7 @@ public class TestStopDAO {
             }
 
             // Prueba de delete()
-            int deleteId = 2; // ID de parada a eliminar
+            int deleteId = 1; // ID de parada a eliminar
             StopAdmin stopToDelete = stopDAO.findById(deleteId);
             if (stopToDelete != null) {
                 stopDAO.delete(stopToDelete);

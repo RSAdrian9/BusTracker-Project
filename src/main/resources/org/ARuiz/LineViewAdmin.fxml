@@ -6,22 +6,25 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
+<?import javafx.scene.control.TextField?>
 <AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ARuiz.LineControllerAdmin">
     <children>
-        <TableView layoutX="16.0" layoutY="123.0" prefHeight="462.0" prefWidth="631.0">
+        <TableView fx:id="tableLineView" layoutX="16.0" layoutY="123.0" prefHeight="462.0" prefWidth="631.0">
             <columns>
-                <TableColumn prefWidth="75.0" text="Id" />
-                <TableColumn prefWidth="117.5999984741211" text="Nombre" />
-                <TableColumn prefWidth="168.800048828125" text="Place" />
-                <TableColumn prefWidth="168.80001831054688" text="Route" />
-                <TableColumn prefWidth="98.39995117187505" text="TimeTable" />
+                <TableColumn fx:id="idColumn" prefWidth="75.0" text="Id" />
+                <TableColumn fx:id="nameColumn" prefWidth="117.5999984741211" text="Name" />
+                <TableColumn fx:id="placeColumn" prefWidth="168.800048828125" text="Place" />
+                <TableColumn fx:id="routeColumn" prefWidth="168.80001831054688" text="Route" />
+                <TableColumn fx:id="timeTableColumn" prefWidth="98.39995117187505" text="TimeTable" />
             </columns>
         </TableView>
-        <Button fx:id="btnHome" layoutX="426.0" layoutY="29.0" mnemonicParsing="false" onAction="#showHome" text="Home" />
-        <Button fx:id="btnRefresh" layoutX="14.0" layoutY="30.0" mnemonicParsing="false" onAction="#refreshLineView" text="Refresh" />
-      <Button layoutX="740.0" layoutY="254.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="56.0" text="Add" />
-      <Button layoutX="740.0" layoutY="319.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="56.0" text="Delete" />
-      <Button layoutX="740.0" layoutY="385.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="56.0" text="Delete" />
+        <Button fx:id="btnHome" layoutX="14.0" layoutY="31.0" mnemonicParsing="false" onAction="#showHome" text="Back" />
+        <Button fx:id="btnRefresh" layoutX="14.0" layoutY="64.0" mnemonicParsing="false" onAction="#refreshLineView" text="Refresh" />
+        <Button fx:id="btnAdd" layoutX="682.0" layoutY="453.0" mnemonicParsing="false" onAction="#addLine" prefHeight="34.0" prefWidth="56.0" text="Add" />
+        <Button fx:id="btnDelete" layoutX="820.0" layoutY="453.0" mnemonicParsing="false" onAction="#deleteLine" prefHeight="34.0" prefWidth="56.0" text="Delete" />
+        <Button fx:id="btnUpdate" layoutX="751.0" layoutY="508.0" mnemonicParsing="false" onAction="#updateLine" prefHeight="34.0" prefWidth="56.0" text="Update" />
+        <TextField fx:id="txtfld_name" layoutX="682.0" layoutY="300.0" prefHeight="26.0" prefWidth="194.0" />
+        <TextField fx:id="txtfld_searchId" layoutX="682.0" layoutY="151.0" prefHeight="26.0" prefWidth="82.0" />
       <Label fx:id="lbl_idAdmin" layoutX="768.0" layoutY="29.0" prefHeight="26.0" prefWidth="118.0" text="ID Admin" textAlignment="CENTER" />
     </children>
 </AnchorPane>

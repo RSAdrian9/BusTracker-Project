@@ -119,11 +119,14 @@ public class StopControllerAdmin {
     @FXML
     public void addStop() throws SQLException {
         String name = txtfld_name.getText();
-        StopAdmin newStop = new StopAdmin(name);
+        List<StopAdmin> stops = stopDAO.findAll();
+        int lastId = stops.isEmpty() ? 0 : stops.get(stops.size() - 1).getId_stop();
+        StopAdmin newStop = new StopAdmin(lastId + 1, name);
         stopDAO.insert(newStop);
         clearInputFields();
         refreshStopList();
     }
+
 
     /**
      * @author Adrián Ruiz Sánchez
@@ -191,6 +194,7 @@ public class StopControllerAdmin {
      * @author Adrián Ruiz Sánchez
      */
     private void clearInputFields() {
+
         txtfld_name.clear();
     }
 
