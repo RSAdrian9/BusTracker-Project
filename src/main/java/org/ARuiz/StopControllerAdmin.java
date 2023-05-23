@@ -19,6 +19,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Controlador para la vista de administración de paradas.
+ */
 public class StopControllerAdmin {
     @FXML
     private TableView<StopAdmin> tableViewStops;
@@ -34,6 +37,11 @@ public class StopControllerAdmin {
     private Connection con;
     StopDAO stopDAO;
 
+    /**
+     * Establece la conexión a la base de datos.
+     *
+     * @param con La conexión a establecer.
+     */
     public void setConnection(Connection con) {
         this.con = con;
         stopDAO = new StopDAO();
@@ -51,6 +59,9 @@ public class StopControllerAdmin {
         refreshStopList();
     }
 
+    /**
+     * Actualiza la lista de paradas.
+     */
     public void refreshStopList() {
         if (stopDAO == null) {
             stopDAO = new StopDAO(); // Crear una nueva instancia de StopDAO
@@ -65,6 +76,10 @@ public class StopControllerAdmin {
     }
 
 
+    /**
+     * @author Adrián Ruiz Sánchez
+     * @param event
+     */
     public void showHome(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("HomeView.fxml"));
@@ -78,6 +93,10 @@ public class StopControllerAdmin {
         }
     }
 
+    /**
+     * @author Adrián Ruiz Sánchez
+     * @param event
+     */
     @FXML
     public void refreshLineView(ActionEvent event) {
         try {
@@ -92,6 +111,11 @@ public class StopControllerAdmin {
         }
     }
 
+
+    /**
+     * @author Adrián Ruiz Sánchez
+     * @throws SQLException
+     */
     @FXML
     public void addStop() throws SQLException {
         String name = txtfld_name.getText();
@@ -101,6 +125,10 @@ public class StopControllerAdmin {
         refreshStopList();
     }
 
+    /**
+     * @author Adrián Ruiz Sánchez
+     * @throws SQLException
+     */
     @FXML
     public void updateStop() throws SQLException {
         StopAdmin selectedStop = tableViewStops.getSelectionModel().getSelectedItem();
@@ -113,6 +141,10 @@ public class StopControllerAdmin {
         }
     }
 
+    /**
+     * @author Adrián Ruiz Sánchez
+     * @throws SQLException
+     */
     @FXML
     public void deleteStop() throws SQLException {
         StopAdmin selectedStop = tableViewStops.getSelectionModel().getSelectedItem();
@@ -128,6 +160,9 @@ public class StopControllerAdmin {
         tableViewStops.refresh();
     }
 
+    /**
+     * @author Adrián Ruiz Sánchez
+     */
     @FXML
     private void searchIdStop() {
         String searchId = txtfld_searchId.getText();
@@ -152,79 +187,12 @@ public class StopControllerAdmin {
         }
     }
 
+    /**
+     * @author Adrián Ruiz Sánchez
+     */
     private void clearInputFields() {
         txtfld_name.clear();
     }
-
-    /*
-    @FXML
-    private void addStop() {
-        String name = txtfld_name.getText();
-
-        if (!name.isEmpty()) {
-            try {
-                StopAdmin newStop = new StopAdmin(name);
-                stopDAO.insert(newStop);
-                clearStopDetails();
-                loadStops();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                // Manejar el error al insertar una parada
-            }
-        } else {
-            // Mostrar un mensaje de error indicando que se debe ingresar el nombre de la parada
-        }
-    }
-
-
-
-    @FXML
-    private void deleteStop() {
-        StopAdmin selectedStop = tableViewStops.getSelectionModel().getSelectedItem();
-
-        if (selectedStop != null) {
-            try {
-                stopDAO.delete(selectedStop);
-                clearStopDetails();
-                loadStops();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                // Manejar el error al eliminar una parada
-            }
-        } else {
-            // Mostrar un mensaje de error indicando que no se ha seleccionado ninguna parada para eliminar
-        }
-    }
-
-    @FXML
-    private void updateStop() {
-        StopAdmin selectedStop = tableViewStops.getSelectionModel().getSelectedItem();
-
-        if (selectedStop != null) {
-            String newName = txtfld_name.getText();
-
-            if (!newName.isEmpty()) {
-                selectedStop.setName(newName);
-
-                try {
-                    stopDAO.update(selectedStop);
-                    clearStopDetails();
-                    loadStops();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    // Manejar el error al actualizar una parada
-                }
-            } else {
-                // Mostrar un mensaje de error indicando que se debe ingresar el nuevo nombre de la parada
-            }
-        } else {
-            // Mostrar un mensaje de error indicando que no se ha seleccionado ninguna parada para actualizar
-        }
-    }
-
-
-
-     */
 
 }
 

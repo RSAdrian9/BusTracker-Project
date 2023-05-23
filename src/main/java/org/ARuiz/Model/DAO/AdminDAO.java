@@ -2,6 +2,7 @@ package org.ARuiz.Model.DAO;
 
 import org.ARuiz.Model.Connections.ConnectionMySQL;
 import org.ARuiz.Model.Domain.Admin;
+import org.ARuiz.Model.Domain.StopAdmin;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -91,11 +92,12 @@ public class AdminDAO implements DAO<Admin> {
 
 
     @Override
-    public void delete(Admin entity) throws SQLException {
+    public StopAdmin delete(Admin entity) throws SQLException {
         try (PreparedStatement pst = con.prepareStatement(DELETE)) {
             pst.setInt(1, entity.getId_admin());
             pst.executeUpdate();
         }
+        return null;
     }
 
     @Override
