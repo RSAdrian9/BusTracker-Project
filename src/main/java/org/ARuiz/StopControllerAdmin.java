@@ -33,6 +33,8 @@ public class StopControllerAdmin {
     private TextField txtfld_searchId;
     @FXML
     private TextField txtfld_name;
+    @FXML
+    private Button btnDelete;
 
     private Connection con;
     StopDAO stopDAO;
@@ -53,6 +55,10 @@ public class StopControllerAdmin {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id_stop"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
+        tableViewStops.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            updateDeleteButtonState();
+        });
+
         stopList = FXCollections.observableArrayList();
         tableViewStops.setItems(stopList);
 
@@ -64,7 +70,7 @@ public class StopControllerAdmin {
      */
     public void refreshStopList() {
         if (stopDAO == null) {
-            stopDAO = new StopDAO(); // Crear una nueva instancia de StopDAO
+            stopDAO = new StopDAO();
         }
         try {
             List<StopAdmin> stops = stopDAO.findAll();
@@ -109,6 +115,13 @@ public class StopControllerAdmin {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void updateDeleteButtonState() {
+        StopAdmin selectedStop = tableViewStops.getSelectionModel().getSelectedItem();
+        boolean lineSelected = (selectedStop != null);
+        btnDelete.setDisable(!lineSelected);
     }
 
 
@@ -157,9 +170,7 @@ public class StopControllerAdmin {
         }
 
         stopDAO.delete(selectedStop);
-        stopList.remove(selectedStop); // Eliminar la parada de la lista de observables
-
-        // Actualizar el TableView con la lista modificada
+        stopList.remove(selectedStop);
         tableViewStops.refresh();
     }
 
@@ -174,27 +185,28 @@ public class StopControllerAdmin {
                 int id = Integer.parseInt(searchId);
                 StopAdmin stop = stopDAO.findById(id);
                 if (stop != null) {
-                    clearInputFields();
+                    txtfld_name.setText(stop.getName());
+
+                    tableViewStops.getSelectionModel().select(stop);
+                    updateDeleteButtonState();
                 } else {
-                    // Mostrar un mensaje indicando que no se encontró ninguna parada con el ID proporcionado
+                    System.out.println("No se encontró ninguna parada con el ID proporcionado");
                 }
             } catch (NumberFormatException e) {
                 e.printStackTrace();
-                // Manejar el error al convertir el ID de búsqueda a un número entero
             } catch (SQLException e) {
                 e.printStackTrace();
-                // Manejar el error al buscar una parada por ID
             }
         } else {
-            // Mostrar un mensaje de error indicando que se debe ingresar un ID de parada válido para buscar
+            System.out.println("Se debe ingresar un ID de parada válido para buscar");
         }
     }
+
 
     /**
      * @author Adrián Ruiz Sánchez
      */
     private void clearInputFields() {
-
         txtfld_name.clear();
     }
 

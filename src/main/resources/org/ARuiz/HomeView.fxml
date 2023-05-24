@@ -38,6 +38,7 @@
                </font></Button>
          </children>
       </GridPane>
-      <Label layoutX="294.0" layoutY="14.0" prefHeight="26.0" prefWidth="92.0" text="ID Admin" />
+      <Label fx:id="idUser" layoutX="294.0" layoutY="14.0" prefHeight="26.0" prefWidth="92.0" text="ID Admin" />
+      <Button fx:id="btnLogout" layoutX="14.0" layoutY="15.0" mnemonicParsing="false" onAction="#btnLogoutValidate" text="Log out" />
    </children>
 </AnchorPane>

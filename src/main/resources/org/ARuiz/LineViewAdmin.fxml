@@ -4,9 +4,9 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<?import javafx.scene.control.TextField?>
 <AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ARuiz.LineControllerAdmin">
     <children>
         <TableView fx:id="tableLineView" layoutX="16.0" layoutY="123.0" prefHeight="462.0" prefWidth="631.0">
@@ -20,11 +20,19 @@
         </TableView>
         <Button fx:id="btnHome" layoutX="14.0" layoutY="31.0" mnemonicParsing="false" onAction="#showHome" text="Back" />
         <Button fx:id="btnRefresh" layoutX="14.0" layoutY="64.0" mnemonicParsing="false" onAction="#refreshLineView" text="Refresh" />
-        <Button fx:id="btnAdd" layoutX="682.0" layoutY="453.0" mnemonicParsing="false" onAction="#addLine" prefHeight="34.0" prefWidth="56.0" text="Add" />
-        <Button fx:id="btnDelete" layoutX="820.0" layoutY="453.0" mnemonicParsing="false" onAction="#deleteLine" prefHeight="34.0" prefWidth="56.0" text="Delete" />
-        <Button fx:id="btnUpdate" layoutX="751.0" layoutY="508.0" mnemonicParsing="false" onAction="#updateLine" prefHeight="34.0" prefWidth="56.0" text="Update" />
-        <TextField fx:id="txtfld_name" layoutX="682.0" layoutY="300.0" prefHeight="26.0" prefWidth="194.0" />
+        <Button fx:id="btnAdd" layoutX="686.0" layoutY="470.0" mnemonicParsing="false" onAction="#addLine" prefHeight="34.0" prefWidth="56.0" text="Add" />
+        <Button fx:id="btnDelete" layoutX="820.0" layoutY="470.0" mnemonicParsing="false" onAction="#deleteLine" prefHeight="34.0" prefWidth="56.0" text="Delete" />
+        <Button fx:id="btnUpdate" layoutX="751.0" layoutY="523.0" mnemonicParsing="false" onAction="#updateLine" prefHeight="34.0" prefWidth="56.0" text="Update" />
         <TextField fx:id="txtfld_searchId" layoutX="682.0" layoutY="151.0" prefHeight="26.0" prefWidth="82.0" />
-      <Label fx:id="lbl_idAdmin" layoutX="768.0" layoutY="29.0" prefHeight="26.0" prefWidth="118.0" text="ID Admin" textAlignment="CENTER" />
+        <Button fx:id="btnSearch" layoutX="786.0" layoutY="151.0" mnemonicParsing="false" onAction="#searchIdLine" prefHeight="26.0" prefWidth="82.0" text="🔍 Search " />
+        <Label fx:id="lbl_idAdmin" layoutX="768.0" layoutY="29.0" prefHeight="26.0" prefWidth="118.0" text="ID Admin" textAlignment="CENTER" />
+        <TextField fx:id="txtfld_name" layoutX="682.0" layoutY="225.0" prefHeight="26.0" prefWidth="194.0" />
+        <Label layoutX="682.0" layoutY="198.0" text="Name" />
+        <TextField fx:id="txtfld_place" layoutX="682.0" layoutY="287.0" prefHeight="26.0" prefWidth="194.0" />
+        <Label layoutX="682.0" layoutY="261.0" text="Place" />
+        <TextField fx:id="txtfld_route" layoutX="682.0" layoutY="352.0" prefHeight="26.0" prefWidth="194.0" />
+        <Label layoutX="682.0" layoutY="327.0" text="Route" />
+        <TextField fx:id="txtfld_timetable" layoutX="682.0" layoutY="421.0" prefHeight="26.0" prefWidth="194.0" />
+        <Label layoutX="682.0" layoutY="392.0" text="TimeTable" />
     </children>
 </AnchorPane>

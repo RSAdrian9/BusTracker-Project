@@ -46,7 +46,7 @@
          <Cursor fx:constant="TEXT" />
       </cursor>
    </TextField>
-   <PasswordField fx:id="txtfld_password" alignment="CENTER" layoutX="33.0" layoutY="343.0" prefHeight="30.0" prefWidth="338.0" promptText="password" style="-fx-border-style: solid; -fx-border-color: grey; -fx-border-radius: 4; -fx-border-width: 2;" text="1234" AnchorPane.leftAnchor="33.0" AnchorPane.rightAnchor="28.600000000000023">
+   <PasswordField fx:id="txtfld_password" alignment="CENTER" layoutX="33.0" layoutY="343.0" prefHeight="30.0" prefWidth="338.0" promptText="password" style="-fx-border-style: solid; -fx-border-color: grey; -fx-border-radius: 4; -fx-border-width: 2;" text="Adrian1234" AnchorPane.leftAnchor="33.0" AnchorPane.rightAnchor="28.600000000000023">
       <cursor>
          <Cursor fx:constant="TEXT" />
       </cursor></PasswordField>
