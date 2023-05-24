@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
@@ -11,10 +12,24 @@ import javafx.scene.Parent;
 import java.io.IOException;
 
 public class HomeController {
+    @FXML
+    private Label idUser;
 
     @FXML
     private void initialize () {
 
+    }
+
+    @FXML
+    private void btnLogoutValidate(ActionEvent event) {
+        // Código para cerrar la sesión del usuario
+        // Ejemplo: volver a la vista de Login
+
+        try {
+            App.setRoot("LoginView");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
