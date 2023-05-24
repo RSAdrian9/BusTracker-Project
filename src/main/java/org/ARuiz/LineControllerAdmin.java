@@ -8,16 +8,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.ARuiz.Model.DAO.LineDAO;
-import org.ARuiz.Model.DAO.StopDAO;
 import org.ARuiz.Model.Domain.Line;
-import org.ARuiz.Model.Domain.StopAdmin;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -38,8 +33,19 @@ public class LineControllerAdmin {
     private TableColumn<Line, String> routeColumn;
     @FXML
     private TableColumn<Line, LocalTime> timeTableColumn;
-    private TextField txtfld_name;
+    @FXML
     private TextField txtfld_searchId;
+    @FXML
+    private TextField txtfld_name;
+    @FXML
+    private TextField txtfld_place;
+    @FXML
+    private TextField txtfld_route;
+    @FXML
+    private TextField txtfld_timetable;
+    @FXML
+    private Button btnDelete;
+
 
     @FXML
     private Label lbl_idAdmin;
@@ -67,6 +73,10 @@ public class LineControllerAdmin {
         routeColumn.setCellValueFactory(new PropertyValueFactory<>("route"));
         timeTableColumn.setCellValueFactory(new PropertyValueFactory<>("timetable"));
 
+        tableLineView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            updateDeleteButtonState();
+        });
+
         lineList = FXCollections.observableArrayList();
         tableLineView.setItems(lineList);
 
@@ -78,14 +88,13 @@ public class LineControllerAdmin {
      */
     public void refreshLineList() {
         if (lineDAO == null) {
-            lineDAO = new LineDAO(); // Crear una nueva instancia de LineDAO
+            lineDAO = new LineDAO();
         }
         try {
             List<Line> lines = lineDAO.findAll();
             lineList.setAll(lines);
         } catch (SQLException e) {
             e.printStackTrace();
-            // Manejo de la excepción
         }
     }
 
@@ -95,43 +104,36 @@ public class LineControllerAdmin {
             // Cargar la vista LineViewAdmin desde su archivo FXML
             FXMLLoader loader = new FXMLLoader(getClass().getResource("HomeView.fxml"));
             Parent lineViewAdmin = loader.load();
-
-            // Obtener el Stage actual
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            // Crear una nueva escena con la vista LineViewAdmin
             Scene scene = new Scene(lineViewAdmin);
-
-            // Establecer la nueva escena en el Stage
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            // Manejar cualquier excepción que pueda ocurrir durante la carga de la vista
         }
     }
 
     @FXML
     public void refreshLineView(ActionEvent event) {
         try {
-            // Cargar la vista LineViewAdmin desde su archivo FXML
             FXMLLoader loader = new FXMLLoader(getClass().getResource("LineViewAdmin.fxml"));
             Parent lineViewAdmin = loader.load();
-
-            // Obtener el Stage actual
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            // Crear una nueva escena con la vista LineViewAdmin
             Scene scene = new Scene(lineViewAdmin);
-
-            // Establecer la nueva escena en el Stage
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            // Manejar cualquier excepción que pueda ocurrir durante la carga de la vista
         }
     }
+
+    @FXML
+    private void updateDeleteButtonState() {
+        Line selectedLine = tableLineView.getSelectionModel().getSelectedItem();
+        boolean lineSelected = (selectedLine != null);
+        btnDelete.setDisable(!lineSelected);
+    }
+
 
     /**
      * @author Adrián Ruiz Sánchez
@@ -140,11 +142,19 @@ public class LineControllerAdmin {
     @FXML
     public void addLine() throws SQLException {
         String name = txtfld_name.getText();
-        Line newLine = new Line();
+        Integer place = Integer.valueOf(txtfld_place.getText());
+        String route = txtfld_route.getText();
+        LocalTime timetable = LocalTime.parse(txtfld_timetable.getText());
+
+        List<Line> lines = lineDAO.findAll();
+        int lastId = lines.isEmpty() ? 0 : lines.get(lines.size() - 1).getId_bus();
+        Line newLine = new Line(lastId + 1, name, place, route, timetable);
         lineDAO.insert(newLine);
+
         clearInputFields();
         refreshLineList();
     }
+
 
     /**
      * @author Adrián Ruiz Sánchez
@@ -155,8 +165,17 @@ public class LineControllerAdmin {
         Line selectedLine = tableLineView.getSelectionModel().getSelectedItem();
         if (selectedLine != null) {
             String name = txtfld_name.getText();
+            String place = txtfld_place.getText();
+            String route = txtfld_route.getText();
+            String timetable = txtfld_timetable.getText();
+
             selectedLine.setLine_name(name);
+            selectedLine.setPlace(Integer.parseInt(place));
+            selectedLine.setRoute(route);
+            selectedLine.setTimetable(LocalTime.parse(timetable));
+
             lineDAO.update(selectedLine);
+
             clearInputFields();
             refreshLineList();
         }
@@ -175,9 +194,7 @@ public class LineControllerAdmin {
         }
 
         lineDAO.delete(selectedLine);
-        lineList.remove(selectedLine); // Eliminar la parada de la lista de observables
-
-        // Actualizar el TableView con la lista modificada
+        lineList.remove(selectedLine);
         tableLineView.refresh();
     }
 
@@ -190,29 +207,37 @@ public class LineControllerAdmin {
         if (!searchId.isEmpty()) {
             try {
                 int id = Integer.parseInt(searchId);
-                Line stop = lineDAO.findById(id);
-                if (stop != null) {
-                    clearInputFields();
+                Line line = lineDAO.findById(id);
+                if (line != null) {
+                    txtfld_name.setText(line.getLine_name());
+                    txtfld_place.setText(String.valueOf(line.getPlace()));
+                    txtfld_route.setText(line.getRoute());
+                    txtfld_timetable.setText(String.valueOf(line.getTimetable()));
+
+                    tableLineView.getSelectionModel().select(line);
+                    updateDeleteButtonState();
                 } else {
-                    // Mostrar un mensaje indicando que no se encontró ninguna parada con el ID proporcionado
+                    System.out.println("No se encontró ninguna línea con el ID proporcionado");
                 }
             } catch (NumberFormatException e) {
                 e.printStackTrace();
-                // Manejar el error al convertir el ID de búsqueda a un número entero
             } catch (SQLException e) {
                 e.printStackTrace();
-                // Manejar el error al buscar una parada por ID
             }
         } else {
-            // Mostrar un mensaje de error indicando que se debe ingresar un ID de parada válido para buscar
+            System.out.println("Se debe ingresar un ID de línea válido para buscar");
         }
     }
+
+
     /**
      * @author Adrián Ruiz Sánchez
      */
     private void clearInputFields() {
         txtfld_name.clear();
-        txtfld_searchId.clear();
+        txtfld_place.clear();
+        txtfld_route.clear();
+        txtfld_timetable.clear();
     }
 }
 

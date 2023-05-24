@@ -31,34 +31,42 @@ public class Line {
     }
 
     public String getLine_name() {
+
         return line_name;
     }
 
     public void setLine_name(String line_name) {
+
         this.line_name = line_name;
     }
 
     public int getPlace() {
+
         return place;
     }
 
     public void setPlace(int place) {
+
         this.place = place;
     }
 
     public String getRoute() {
+
         return route;
     }
 
     public void setRoute(String route) {
+
         this.route = route;
     }
 
     public LocalTime getTimetable() {
+
         return timetable;
     }
 
     public void setTimetable(LocalTime timetable) {
+
         this.timetable = timetable;
     }
 
