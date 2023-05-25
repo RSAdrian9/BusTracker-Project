@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.text.Font?>
+<AnchorPane prefHeight="180.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.juanite.controller.ErrorController">
+    <ToolBar id="navbar" fx:id="tb_1" onMouseClicked="#tbClickValidate" onMouseDragged="#tbDragValidate" prefHeight="50.0" prefWidth="480.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="112.0">
+        <ImageView fx:id="img_icon" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@icon.png" />
+        </ImageView>
+        <Label fx:id="lbl_titlebar" prefHeight="39.0" prefWidth="146.0" text="ERROR" textFill="#e1e1e1">
+            <font>
+                <Font name="ROGFonts-Regular" size="27.0" />
+            </font>
+        </Label>
+    </ToolBar>
+    <ToolBar id="navbar" fx:id="tb_2" layoutX="471.0" onMouseClicked="#tbClickValidate" onMouseDragged="#tbDragValidate" prefHeight="50.0" prefWidth="113.0" AnchorPane.rightAnchor="0.0" />
+    <Label fx:id="lbl_errorMsg" alignment="CENTER" contentDisplay="CENTER" layoutX="19.0" layoutY="56.0" prefHeight="77.0" prefWidth="315.0" textAlignment="CENTER" textFill="#e1e1e1" AnchorPane.leftAnchor="19.0">
+        <font>
+            <Font size="13.0" />
+        </font>
+    </Label>
+    <Button fx:id="btn_ok" alignment="CENTER" layoutX="132.0" layoutY="139.0" mnemonicParsing="false" onMouseClicked="#btnOkValidate" prefHeight="27.0" prefWidth="88.0" style="-fx-background-color: #c1c1c1; -fx-border-color: #3e3e3e; -fx-background-radius: 7; -fx-border-radius: 7;" text="OK" AnchorPane.leftAnchor="132.0" AnchorPane.rightAnchor="130.0" />
+</AnchorPane>
