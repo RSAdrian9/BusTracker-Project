@@ -1,7 +1,8 @@
 package org.ARuiz.Model.DAO;
 
 import org.ARuiz.Model.Connections.ConnectionMySQL;
-import org.ARuiz.Model.Domain.StopAdmin;
+import org.ARuiz.Model.Domain.Line;
+import org.ARuiz.Model.Domain.Stop;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
 /**
  * Clase que implementa la interfaz DAO para la entidad StopAdmin.
  */
-public class StopDAO implements DAO<StopAdmin> {
+public class StopDAO implements DAO<Stop> {
     private final static String FINDALL = "SELECT * FROM stop"; // Buscar parada entera
     private final static String FINDBYID = "SELECT * FROM stop WHERE id_stop = ?"; // Buscar por id de parada
     private final static String FINDBYNAME = "SELECT name FROM stop WHERE name = ?"; // Buscar por nombre de parada
@@ -17,24 +18,15 @@ public class StopDAO implements DAO<StopAdmin> {
     private final static String UPDATE = "UPDATE stop SET name = ? WHERE id_stop = ?"; // Actualizar parada
     private final static String DELETE = "DELETE FROM stop WHERE id_stop = ?"; // Eliminar parada
 
-    private Connection con;
 
-    /**
-     * Constructor de la clase StopDAO que acepta una conexión como parámetro.
-     *
-     * @param connection La conexión a la base de datos.
-     */
-    public StopDAO(Connection connection) {
-        this.con = connection;
-        if (this.con == null) {
-            throw new IllegalStateException("Error: Connection is null");
-        }
-    }
+    private final static String FINDSTOPSBYLINE = "SELECT s.id_stop, s.name FROM stop s JOIN line_stop ls ON s.id_stop = ls.id_stop WHERE ls.id_bus = ?";private final static String FINDLINESBYSTOP = "SELECT l.id_bus, l.name, l.place FROM line l JOIN line_stop ls ON l.id_bus = ls.id_bus WHERE ls.id_stop = ?";
+
+    private Connection con;
 
     /**
      * Constructor de la clase StopDAO que utiliza la conexión por defecto.
      */
-    public StopDAO() {
+    public StopDAO(Connection con) {
         this.con = ConnectionMySQL.getConnect();
         if (this.con == null) {
             throw new IllegalStateException("Error: Connection is null");
@@ -50,21 +42,26 @@ public class StopDAO implements DAO<StopAdmin> {
         this.con = con;
     }
 
+
     /**
      * @author Adrián Ruiz Sánchez
      * @return stops
      * @throws SQLException
      */
     @Override
-    public List<StopAdmin> findAll() throws SQLException {
-        List<StopAdmin> stops = new ArrayList<>();
+    public List<Stop> findAll() throws SQLException {
+        List<Stop> stops = new ArrayList<>();
         try (PreparedStatement pst = con.prepareStatement(FINDALL)) {
             ResultSet rs = pst.executeQuery();
+
+            LineDAO ldao = new LineDAO(con);
             while (rs.next()) {
-                StopAdmin stop = new StopAdmin(
-                        rs.getInt("id_stop"),
-                        rs.getString("name")
-                );
+                Stop stop = new Stop();
+                int stopId = rs.getInt("id_stop");
+                String stopName = rs.getString("name");
+                stop.setId_stop(stopId);
+                stop.setName(stopName);
+                stop.setLineas(null);
                 stops.add(stop);
             }
         }
@@ -77,20 +74,51 @@ public class StopDAO implements DAO<StopAdmin> {
      * @return stop
      * @throws SQLException
      */
+
     @Override
-    public StopAdmin findById(int id) throws SQLException {
-        StopAdmin stop = null;
+    public Stop findById(int id) throws SQLException {
+        Stop stop = null;
+
         try (PreparedStatement pst = con.prepareStatement(FINDBYID)) {
             pst.setInt(1, id);
-            ResultSet rs = pst.executeQuery();
-            if (rs.next()) {
-                stop = new StopAdmin(
-                        rs.getInt(1), rs.getString("name")
-                );
+
+            try (ResultSet rs = pst.executeQuery()) {
+                LineDAO linedao = new LineDAO(con);
+                while (rs.next()) {
+                    if (stop == null) {
+                        stop = new Stop();
+                        stop.setId_stop(rs.getInt("id_stop"));
+                        stop.setName(rs.getString("name"));
+
+                        stop.setLineas(null);
+                    }
+                }
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
         return stop;
     }
+
+
+    public List<Stop> findStopsByLine(int lineId) throws SQLException {
+        List<Stop> stops = new ArrayList<>();
+        try (PreparedStatement pst = con.prepareStatement(FINDSTOPSBYLINE)) {
+            pst.setInt(1, lineId);
+            try (ResultSet rs = pst.executeQuery()) {
+                while (rs.next()) {
+                    Stop stop = new Stop(
+                            rs.getInt("id_stop"),
+                            rs.getString("name")
+                    );
+                    stops.add(stop);
+                }
+            }
+        }
+        return stops;
+    }
+
 
     /**
      * @author Adrián Ruiz Sánchez
@@ -99,8 +127,9 @@ public class StopDAO implements DAO<StopAdmin> {
      * @throws SQLException
      */
     @Override
-    public StopAdmin insert(StopAdmin entity) throws SQLException {
-        StopAdmin existingStop = findById(entity.getId_stop());
+    public Stop insert(Stop entity) throws SQLException {
+
+        Stop existingStop = findById(entity.getId_stop());
         if (existingStop != null) {
             throw new SQLException("A stop with the same ID already exists");
         }
@@ -122,7 +151,7 @@ public class StopDAO implements DAO<StopAdmin> {
      * @author Adrián Ruiz Sánchez
      */
     @Override
-    public StopAdmin delete(StopAdmin entity) throws SQLException {
+    public Stop delete(Stop entity) throws SQLException {
         try (PreparedStatement pst = con.prepareStatement(DELETE)) {
             pst.setInt(1, entity.getId_stop());
             pst.executeUpdate();
@@ -137,7 +166,7 @@ public class StopDAO implements DAO<StopAdmin> {
      * @throws SQLException
      */
     @Override
-    public StopAdmin update(StopAdmin entity) throws SQLException {
+    public Stop update(Stop entity) throws SQLException {
         try (PreparedStatement pst = con.prepareStatement(UPDATE)) {
             pst.setString(1, entity.getName());
             pst.setInt(2, entity.getId_stop());
@@ -152,12 +181,12 @@ public class StopDAO implements DAO<StopAdmin> {
      * @return null
      * @throws SQLException
      */
-    private StopAdmin findByName(String name) throws SQLException {
+    private Stop findByName(String name) throws SQLException {
         try (PreparedStatement pst = con.prepareStatement(FINDBYNAME)) {
             pst.setString(1, name);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
-                return new StopAdmin(
+                return new Stop(
                         rs.getInt("1"), rs.getString("name")
                 );
             }

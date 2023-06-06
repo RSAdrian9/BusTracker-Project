@@ -7,8 +7,14 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
+<?import javafx.scene.text.Font?>
 <AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ARuiz.LineControllerAdmin">
     <children>
+        <Label fx:id="lbl_title" layoutX="354.0" layoutY="22.0" onDragDetected="#showHome" text="BUS TRACKER">
+            <font>
+                <Font name="Open Sans" size="30.0" />
+            </font>
+        </Label>
         <TableView fx:id="tableLineView" layoutX="16.0" layoutY="123.0" prefHeight="462.0" prefWidth="631.0">
             <columns>
                 <TableColumn fx:id="idColumn" prefWidth="75.0" text="Id" />

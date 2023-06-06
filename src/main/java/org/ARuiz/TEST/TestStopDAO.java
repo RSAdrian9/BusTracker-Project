@@ -1,7 +1,9 @@
 package org.ARuiz.TEST;
 
 import org.ARuiz.Model.DAO.StopDAO;
-import org.ARuiz.Model.Domain.StopAdmin;
+import org.ARuiz.Model.DAO.LineDAO;
+import org.ARuiz.Model.Domain.Stop;
+import org.ARuiz.Model.Domain.Line;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,58 +16,59 @@ public class TestStopDAO {
         String pwd = "";
 
         try (Connection con = DriverManager.getConnection(url, user, pwd)) {
-            StopDAO stopDAO = new StopDAO();
-            stopDAO.setConnection(con);
+            StopDAO stopDAO = new StopDAO(con);
+            LineDAO lineDAO = new LineDAO(con);
 
             // Prueba de findAll()
-            List<StopAdmin> stops = stopDAO.findAll();
+            List<Stop> stops = stopDAO.findAll();
             System.out.println("Paradas encontradas:");
-            for (StopAdmin stop : stops) {
-                System.out.println(stop.getName());
+            for (Stop stop : stops) {
+                System.out.println("ID: " + stop.getId_stop() + ", Nombre: " + stop.getName());
             }
+
+            System.out.println();
 
             // Prueba de findById()
             int id = 1; // ID de parada a buscar
-            StopAdmin stopById = stopDAO.findById(id);
+            Stop stopById = stopDAO.findById(id);
             if (stopById != null) {
                 System.out.println("Parada encontrada por ID " + id + ": " + stopById.getName());
             } else {
                 System.out.println("No se encontró ninguna parada con ID " + id);
             }
             /*
-            // Prueba de insert()
-            String newStopName = "Nueva Parada";
-            StopAdmin newStop = new StopAdmin(rs.getInt(1), newStopName);
-            StopAdmin insertedStop = stopDAO. insert(newStop);
-            System.out.println("Nueva parada insertada: " + insertedStop.getName());
+            // Prueba de findLinesByStop()
+            int stopId = 1; // ID de la parada para buscar las líneas
+            List<Line> linesByStop = lineDAO.findLinesByStop(stopId);
+            if (!linesByStop.isEmpty()) {
+                System.out.println("Líneas que pasan por la parada con ID " + stopId + ":");
+                for (Line line : linesByStop) {
+                    System.out.println("ID: " + line.getId_bus() + ", Nombre: " + line.getName() + ", Plazas: " + line.getPlace());
+                }
+            } else {
+                System.out.println("No se encontraron líneas que pasen por la parada con ID " + stopId);
+            }
 
              */
 
-            // Prueba de update()
-            int updateId = 1; // ID de parada a actualizar
-            String updatedName = "Parada Actualizada";
-            StopAdmin stopToUpdate = stopDAO.findById(updateId);
-            if (stopToUpdate != null) {
-                stopToUpdate.setName(updatedName);
-                StopAdmin updatedStop = stopDAO.update(stopToUpdate);
-                System.out.println("Parada actualizada: " + updatedStop.getName());
+            // Prueba de findStopsByLine()
+            int lineId = 1; // ID de la línea para buscar las paradas
+            List<Stop> stopsByLine = stopDAO.findStopsByLine(lineId);
+            if (!stopsByLine.isEmpty()) {
+                System.out.println("Paradas asociadas a la línea con ID " + lineId + ":");
+                for (Stop stop : stopsByLine) {
+                    System.out.println("ID: " + stop.getId_stop() + ", Nombre: " + stop.getName());
+                }
             } else {
-                System.out.println("No se encontró ninguna parada con ID " + updateId);
+                System.out.println("No se encontraron paradas asociadas a la línea con ID " + lineId);
             }
 
-            // Prueba de delete()
-            int deleteId = 1; // ID de parada a eliminar
-            StopAdmin stopToDelete = stopDAO.findById(deleteId);
-            if (stopToDelete != null) {
-                stopDAO.delete(stopToDelete);
-                System.out.println("Parada eliminada con ID " + deleteId);
-            } else {
-                System.out.println("No se encontró ninguna parada con ID " + deleteId);
-            }
+            // Resto del código...
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 }
+
 

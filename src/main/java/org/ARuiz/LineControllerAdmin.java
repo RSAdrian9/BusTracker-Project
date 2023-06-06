@@ -68,10 +68,8 @@ public class LineControllerAdmin {
 
     public void initialize() throws SQLException {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id_bus"));
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("line_name"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         placeColumn.setCellValueFactory(new PropertyValueFactory<>("place"));
-        routeColumn.setCellValueFactory(new PropertyValueFactory<>("route"));
-        timeTableColumn.setCellValueFactory(new PropertyValueFactory<>("timetable"));
 
         tableLineView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             updateDeleteButtonState();
@@ -143,12 +141,10 @@ public class LineControllerAdmin {
     public void addLine() throws SQLException {
         String name = txtfld_name.getText();
         Integer place = Integer.valueOf(txtfld_place.getText());
-        String route = txtfld_route.getText();
-        LocalTime timetable = LocalTime.parse(txtfld_timetable.getText());
 
         List<Line> lines = lineDAO.findAll();
         int lastId = lines.isEmpty() ? 0 : lines.get(lines.size() - 1).getId_bus();
-        Line newLine = new Line(lastId + 1, name, place, route, timetable);
+        Line newLine = new Line(lastId + 1, name, place);
         lineDAO.insert(newLine);
 
         clearInputFields();
@@ -169,10 +165,8 @@ public class LineControllerAdmin {
             String route = txtfld_route.getText();
             String timetable = txtfld_timetable.getText();
 
-            selectedLine.setLine_name(name);
+            selectedLine.setName(name);
             selectedLine.setPlace(Integer.parseInt(place));
-            selectedLine.setRoute(route);
-            selectedLine.setTimetable(LocalTime.parse(timetable));
 
             lineDAO.update(selectedLine);
 
@@ -209,10 +203,8 @@ public class LineControllerAdmin {
                 int id = Integer.parseInt(searchId);
                 Line line = lineDAO.findById(id);
                 if (line != null) {
-                    txtfld_name.setText(line.getLine_name());
+                    txtfld_name.setText(line.getName());
                     txtfld_place.setText(String.valueOf(line.getPlace()));
-                    txtfld_route.setText(line.getRoute());
-                    txtfld_timetable.setText(String.valueOf(line.getTimetable()));
 
                     tableLineView.getSelectionModel().select(line);
                     updateDeleteButtonState();
@@ -236,8 +228,6 @@ public class LineControllerAdmin {
     private void clearInputFields() {
         txtfld_name.clear();
         txtfld_place.clear();
-        txtfld_route.clear();
-        txtfld_timetable.clear();
     }
 }
 

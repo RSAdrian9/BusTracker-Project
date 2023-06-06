@@ -52,7 +52,7 @@
       </cursor></PasswordField>
    <Label fx:id="lbl_title" alignment="CENTER" layoutX="93.0" layoutY="39.0" prefHeight="60.0" prefWidth="143.0" text="BusTracker" textFill="BLUE" AnchorPane.leftAnchor="93.0" AnchorPane.rightAnchor="92.0">
       <font>
-         <Font name="System Bold" size="22.0" />
+         <Font name="Open Sans" size="22.0" />
       </font>
    </Label>
    <Label fx:id="lbl_errorMsg" alignment="CENTER" layoutX="31.0" layoutY="395.0" prefHeight="18.0" prefWidth="266.0" text="Error" textFill="RED" visible="false">

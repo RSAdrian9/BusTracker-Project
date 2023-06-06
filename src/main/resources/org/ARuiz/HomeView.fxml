@@ -20,19 +20,19 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="btnAccessLines" mnemonicParsing="false" onAction="#showLines" prefHeight="235.0" prefWidth="226.0" style="-fx-background-color: orange;" text="Lines">
+            <Button fx:id="btnAccessLines" mnemonicParsing="false" onAction="#showLines" prefHeight="235.0" prefWidth="226.0" style="-fx-background-color: FFE1A6;" text="Lines">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
-            <Button fx:id="btnAccessBookings" mnemonicParsing="false" onAction="#showBookings" prefHeight="165.0" prefWidth="226.0" style="-fx-background-color: green;" text="Bookings" GridPane.columnIndex="1">
+            <Button fx:id="btnAccessBookings" mnemonicParsing="false" onAction="#showBookings" prefHeight="165.0" prefWidth="226.0" style="-fx-background-color: A6FFAA;" text="Bookings" GridPane.columnIndex="1">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
-            <Button fx:id="btnAccessStops" mnemonicParsing="false" onAction="#showStops" prefHeight="171.0" prefWidth="226.0" style="-fx-background-color: red;" text="Stops" GridPane.rowIndex="1">
+            <Button fx:id="btnAccessStops" mnemonicParsing="false" onAction="#showStops" prefHeight="171.0" prefWidth="226.0" style="-fx-background-color: FFA6C2;" text="Stops" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
-            <Button fx:id="btnAccessCinemasHamm" mnemonicParsing="false" onAction="#showCinemasHamm" prefHeight="167.0" prefWidth="226.0" style="-fx-background-color: purple;" text="CinemasHamm(Soon)" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Button fx:id="btnAccessCinemasHamm" mnemonicParsing="false" onAction="#showCinemasHamm" prefHeight="167.0" prefWidth="226.0" style="-fx-background-color: FBA3FF;" text="CinemasHamm(Soon)" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
@@ -40,5 +40,13 @@
       </GridPane>
       <Label fx:id="idUser" layoutX="294.0" layoutY="14.0" prefHeight="26.0" prefWidth="92.0" text="ID Admin" />
       <Button fx:id="btnLogout" layoutX="14.0" layoutY="15.0" mnemonicParsing="false" onAction="#btnLogoutValidate" text="Log out" />
+      <Label layoutX="137.0" layoutY="98.0" text="BUS TRACKER" textFill="BLUE">
+         <font>
+            <Font name="Open Sans" size="22.0" />
+         </font></Label>
+      <Label layoutX="182.0" layoutY="183.0" text="HOME">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
    </children>
 </AnchorPane>
