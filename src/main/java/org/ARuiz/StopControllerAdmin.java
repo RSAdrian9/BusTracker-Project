@@ -12,7 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.ARuiz.Model.DAO.StopDAO;
-import org.ARuiz.Model.Domain.StopAdmin;
+import org.ARuiz.Model.Domain.Stop;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -24,11 +24,11 @@ import java.util.List;
  */
 public class StopControllerAdmin {
     @FXML
-    private TableView<StopAdmin> tableViewStops;
+    private TableView<Stop> tableViewStops;
     @FXML
-    private TableColumn<StopAdmin, Integer> idColumn;
+    private TableColumn<Stop, Integer> idColumn;
     @FXML
-    private TableColumn<StopAdmin, String> nameColumn;
+    private TableColumn<Stop, String> nameColumn;
     @FXML
     private TextField txtfld_searchId;
     @FXML
@@ -46,10 +46,10 @@ public class StopControllerAdmin {
      */
     public void setConnection(Connection con) {
         this.con = con;
-        stopDAO = new StopDAO();
+        stopDAO = new StopDAO(con);
     }
 
-    private ObservableList<StopAdmin> stopList;
+    private ObservableList<Stop> stopList;
 
     public void initialize() throws SQLException {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id_stop"));
@@ -70,10 +70,10 @@ public class StopControllerAdmin {
      */
     public void refreshStopList() {
         if (stopDAO == null) {
-            stopDAO = new StopDAO();
+            stopDAO = new StopDAO(con);
         }
         try {
-            List<StopAdmin> stops = stopDAO.findAll();
+            List<Stop> stops = stopDAO.findAll();
             stopList.setAll(stops);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -119,7 +119,7 @@ public class StopControllerAdmin {
 
     @FXML
     private void updateDeleteButtonState() {
-        StopAdmin selectedStop = tableViewStops.getSelectionModel().getSelectedItem();
+        Stop selectedStop = tableViewStops.getSelectionModel().getSelectedItem();
         boolean lineSelected = (selectedStop != null);
         btnDelete.setDisable(!lineSelected);
     }
@@ -132,9 +132,9 @@ public class StopControllerAdmin {
     @FXML
     public void addStop() throws SQLException {
         String name = txtfld_name.getText();
-        List<StopAdmin> stops = stopDAO.findAll();
+        List<Stop> stops = stopDAO.findAll();
         int lastId = stops.isEmpty() ? 0 : stops.get(stops.size() - 1).getId_stop();
-        StopAdmin newStop = new StopAdmin(lastId + 1, name);
+        Stop newStop = new Stop(lastId + 1, name);
         stopDAO.insert(newStop);
         clearInputFields();
         refreshStopList();
@@ -147,7 +147,7 @@ public class StopControllerAdmin {
      */
     @FXML
     public void updateStop() throws SQLException {
-        StopAdmin selectedStop = tableViewStops.getSelectionModel().getSelectedItem();
+        Stop selectedStop = tableViewStops.getSelectionModel().getSelectedItem();
         if (selectedStop != null) {
             String name = txtfld_name.getText();
             selectedStop.setName(name);
@@ -163,7 +163,7 @@ public class StopControllerAdmin {
      */
     @FXML
     public void deleteStop() throws SQLException {
-        StopAdmin selectedStop = tableViewStops.getSelectionModel().getSelectedItem();
+        Stop selectedStop = tableViewStops.getSelectionModel().getSelectedItem();
         if (selectedStop == null) {
             System.out.println("No se ha seleccionado ninguna parada.");
             return;
@@ -183,7 +183,7 @@ public class StopControllerAdmin {
         if (!searchId.isEmpty()) {
             try {
                 int id = Integer.parseInt(searchId);
-                StopAdmin stop = stopDAO.findById(id);
+                Stop stop = stopDAO.findById(id);
                 if (stop != null) {
                     txtfld_name.setText(stop.getName());
 
