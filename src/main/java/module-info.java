@@ -3,6 +3,7 @@ module org.ARuiz {
     requires javafx.fxml;
     requires java.sql;
     requires java.xml.bind;
+    requires javafx.graphics;
 
     opens org.ARuiz to javafx.fxml;
     opens org.ARuiz.Model.Connections to java.xml.bind;
