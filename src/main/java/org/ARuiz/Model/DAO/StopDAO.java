@@ -18,8 +18,7 @@ public class StopDAO implements DAO<Stop> {
     private final static String UPDATE = "UPDATE stop SET name = ? WHERE id_stop = ?"; // Actualizar parada
     private final static String DELETE = "DELETE FROM stop WHERE id_stop = ?"; // Eliminar parada
 
-
-    private final static String FINDSTOPSBYLINE = "SELECT s.id_stop, s.name FROM stop s JOIN line_stop ls ON s.id_stop = ls.id_stop WHERE ls.id_bus = ?";private final static String FINDLINESBYSTOP = "SELECT l.id_bus, l.name, l.place FROM line l JOIN line_stop ls ON l.id_bus = ls.id_bus WHERE ls.id_stop = ?";
+    private final static String FINDSTOPSBYLINE = "SELECT s.id_stop, s.name FROM stop s JOIN line_stop ls ON s.id_stop = ls.id_stop WHERE ls.id_bus = ?";
 
     private Connection con;
 
@@ -90,7 +89,7 @@ public class StopDAO implements DAO<Stop> {
                         stop.setId_stop(rs.getInt("id_stop"));
                         stop.setName(rs.getString("name"));
 
-                        stop.setLineas(null);
+                        stop.setLineas(linedao.findLinesByStop(id));
                     }
                 }
             }

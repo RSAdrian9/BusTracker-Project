@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import org.ARuiz.Model.DAO.LineDAO;
 import org.ARuiz.Model.DAO.StopDAO;
 import org.ARuiz.Model.Domain.Stop;
 
@@ -38,6 +39,7 @@ public class StopControllerAdmin {
 
     private Connection con;
     StopDAO stopDAO;
+    LineDAO lineDAO;
 
     /**
      * Establece la conexión a la base de datos.
@@ -51,6 +53,7 @@ public class StopControllerAdmin {
 
     private ObservableList<Stop> stopList;
 
+    @FXML
     public void initialize() throws SQLException {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id_stop"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -68,6 +71,7 @@ public class StopControllerAdmin {
     /**
      * Actualiza la lista de paradas.
      */
+    @FXML
     public void refreshStopList() {
         if (stopDAO == null) {
             stopDAO = new StopDAO(con);
@@ -86,6 +90,7 @@ public class StopControllerAdmin {
      * @author Adrián Ruiz Sánchez
      * @param event
      */
+    @FXML
     public void showHome(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("HomeView.fxml"));
@@ -173,6 +178,34 @@ public class StopControllerAdmin {
         stopList.remove(selectedStop);
         tableViewStops.refresh();
     }
+
+    @FXML
+    public void infoLinesByStop() {
+        Stop selectedStop = tableViewStops.getSelectionModel().getSelectedItem();
+        if (selectedStop != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/ARuiz/ShowLinesByStop.fxml"));
+                Parent root = loader.load();
+
+                LinesByStopController controller = loader.getController();
+                controller.setConnection(con);
+                controller.setLineDAO(new LineDAO(con));
+                controller.setSelectedStop(selectedStop);
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /*
+    @FXML
+    public void info
+
+     */
 
     /**
      * @author Adrián Ruiz Sánchez
