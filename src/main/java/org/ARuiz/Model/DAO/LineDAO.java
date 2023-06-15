@@ -15,19 +15,17 @@ public class LineDAO implements DAO<Line> {
     private final static String DELETE = "DELETE FROM line WHERE id_bus = ?";
     private final static String UPDATE = "UPDATE line SET line_name = ?, place = ? WHERE id_bus = ?";
 
-
+    private final static String FINDLINESBYSTOP = "SELECT l.id_bus, l.name, l.place FROM line l JOIN line_stop ls ON l.id_bus = ls.id_bus WHERE ls.id_stop = ?";
     private final static String ADDSTOPTOLINE = "INSERT INTO line_stop (id_bus, id_stop) VALUES (?, ?)";
 
 
     private Connection con;
 
     public LineDAO(Connection con) {
-
         this.con = con;
     }
 
     public LineDAO() {
-
         this.con = ConnectionMySQL.getConnect();
     }
 
@@ -79,6 +77,24 @@ public class LineDAO implements DAO<Line> {
         }
 
         return line;
+    }
+
+    public List<Line> findLinesByStop(int stopId) throws SQLException {
+        List<Line> lines = new ArrayList<>();
+        try (PreparedStatement pst = con.prepareStatement(FINDLINESBYSTOP)) {
+            pst.setInt(1, stopId);
+            try (ResultSet rs = pst.executeQuery()) {
+                while (rs.next()) {
+                    Line line = new Line(
+                            rs.getInt("id_bus"),
+                            rs.getString("name"),
+                            rs.getInt("place")
+                    );
+                    lines.add(line);
+                }
+            }
+        }
+        return lines;
     }
 
 

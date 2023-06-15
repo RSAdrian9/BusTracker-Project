@@ -13,6 +13,7 @@ public class Line {
         this.id_bus = id_bus;
         this.name = name;
         this.place = place;
+        this.stops = new ArrayList<>();
     }
 
     public Line() {
