@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="310.0" prefWidth="525.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ARuiz.StopsByLineController">
+     <Label layoutX="228.0" layoutY="25.0" styleClass="title-label" text="Stops by Line" />
+     <ListView fx:id="stopListView" layoutY="55.0" prefHeight="200" prefWidth="529.0" />
+     <Button fx:id="closeButton" layoutX="248.0" layoutY="270.0" onAction="#closeView" text="OK" />
+</AnchorPane>

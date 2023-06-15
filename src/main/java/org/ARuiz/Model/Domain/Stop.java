@@ -16,6 +16,9 @@ public class Stop {
 
     }
 
+    public Stop(String s) {
+    }
+
     public int getId_stop() {
         return id_stop;
     }
@@ -40,6 +43,13 @@ public class Stop {
         this.lineas = lineas;
     }
 
+
+    @Override
+    public String toString() {
+        return "Stops -> " + id_stop + " " + name;
+    }
+
+    /*
     @Override
     public String toString() {
         return "Stop{" +
@@ -48,4 +58,6 @@ public class Stop {
                 ", lineas=" + lineas +
                 '}';
     }
+
+     */
 }

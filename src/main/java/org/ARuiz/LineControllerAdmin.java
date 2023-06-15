@@ -12,7 +12,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.ARuiz.Model.DAO.LineDAO;
+import org.ARuiz.Model.DAO.StopDAO;
 import org.ARuiz.Model.Domain.Line;
+import org.ARuiz.Model.Domain.Stop;
+
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -30,22 +33,13 @@ public class LineControllerAdmin {
     @FXML
     private TableColumn<Line, Integer> placeColumn;
     @FXML
-    private TableColumn<Line, String> routeColumn;
-    @FXML
-    private TableColumn<Line, LocalTime> timeTableColumn;
-    @FXML
     private TextField txtfld_searchId;
     @FXML
     private TextField txtfld_name;
     @FXML
     private TextField txtfld_place;
     @FXML
-    private TextField txtfld_route;
-    @FXML
-    private TextField txtfld_timetable;
-    @FXML
     private Button btnDelete;
-
 
     @FXML
     private Label lbl_idAdmin;
@@ -53,6 +47,7 @@ public class LineControllerAdmin {
 
     private Connection con;
     LineDAO lineDAO;
+    StopDAO stopDAO;
 
     /**
      * Establece la conexión a la base de datos.
@@ -162,8 +157,6 @@ public class LineControllerAdmin {
         if (selectedLine != null) {
             String name = txtfld_name.getText();
             String place = txtfld_place.getText();
-            String route = txtfld_route.getText();
-            String timetable = txtfld_timetable.getText();
 
             selectedLine.setName(name);
             selectedLine.setPlace(Integer.parseInt(place));
@@ -191,6 +184,56 @@ public class LineControllerAdmin {
         lineList.remove(selectedLine);
         tableLineView.refresh();
     }
+
+    @FXML
+    public void infoStopsByLine() {
+        Line selectedLine = tableLineView.getSelectionModel().getSelectedItem();
+        if (selectedLine != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/ARuiz/ShowStopsByLine.fxml"));
+                Parent root = loader.load();
+
+                StopsByLineController controller = loader.getController();
+                controller.setConnection(con);
+                controller.setStopDAO(new StopDAO(con));
+                controller.setSelectedLine(selectedLine);
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
+    /*
+    @FXML
+    public void addStopToLine() {
+        Line selectedLine = tableLineView.getSelectionModel().getSelectedItem();
+        if (selectedLine != null) {
+            try {
+                // Abrir la vista para seleccionar paradas
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("SelectStopView.fxml"));
+                Parent selectStopView = loader.load();
+                SelectStopController selectStopController = loader.getController();
+
+                // Pasar el ID de la línea seleccionada al controlador de la vista de selección de paradas
+                selectStopController.setLineId(selectedLine.getId_bus());
+
+                Stage stage = new Stage();
+                stage.setTitle("Seleccionar paradas");
+                stage.setScene(new Scene(selectStopView));
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+     */
 
     /**
      * @author Adrián Ruiz Sánchez
