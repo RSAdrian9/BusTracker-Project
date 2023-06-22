@@ -71,7 +71,35 @@ class LineTest {
     @Test
     void testToString() {
         Line line = new Line(1, "Test Line", 10);
-        String expected = "Line{id_bus=1, name='Test Line', place=10, stops=[]}";
+        String expected = "Lines -> 1 Test Line 10";
         assertEquals(expected, line.toString());
+    }
+
+    @Test
+    void getName() {
+    }
+
+    @Test
+    void setName() {
+    }
+
+    @Test
+    void getPlace() {
+    }
+
+    @Test
+    void setPlace() {
+    }
+
+    @Test
+    void getStops() {
+    }
+
+    @Test
+    void setStops() {
+    }
+
+    @Test
+    void testToString1() {
     }
 }
