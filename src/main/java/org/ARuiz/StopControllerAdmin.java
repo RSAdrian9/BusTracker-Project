@@ -22,6 +22,7 @@ import java.util.List;
 
 /**
  * Controlador para la vista de administración de paradas.
+ * @author Adrián Ruiz
  */
 public class StopControllerAdmin {
     @FXML
@@ -37,6 +38,8 @@ public class StopControllerAdmin {
     @FXML
     private Button btnDelete;
 
+    private ErrorMessageController errorController;
+
     private Connection con;
     StopDAO stopDAO;
     LineDAO lineDAO;
@@ -45,6 +48,7 @@ public class StopControllerAdmin {
      * Establece la conexión a la base de datos.
      *
      * @param con La conexión a establecer.
+     * @author Adrián Ruiz
      */
     public void setConnection(Connection con) {
         this.con = con;
@@ -53,8 +57,17 @@ public class StopControllerAdmin {
 
     private ObservableList<Stop> stopList;
 
+    /**
+     * Inicializa el controlador después de que se haya cargado el archivo FXML.
+     * Configura la apariencia de la tabla y los eventos de selección.
+     *
+     * @throws SQLException Si ocurre un error al acceder a la base de datos.
+     * @author Adrián Ruiz
+     */
     @FXML
     public void initialize() throws SQLException {
+        errorController = new ErrorMessageController();
+
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id_stop"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
@@ -69,7 +82,9 @@ public class StopControllerAdmin {
     }
 
     /**
-     * Actualiza la lista de paradas.
+     * Actualiza la lista de paradas obteniendo los datos de la base de datos.
+     * Si ocurre un error, muestra un mensaje de error en la interfaz.
+     * @author Adrián Ruiz
      */
     @FXML
     public void refreshStopList() {
@@ -79,16 +94,20 @@ public class StopControllerAdmin {
         try {
             List<Stop> stops = stopDAO.findAll();
             stopList.setAll(stops);
+
         } catch (SQLException e) {
+            String errorMessage = "Error en la base de datos: " + e.getMessage();
+            errorController.showErrorView(errorMessage);
             e.printStackTrace();
-            // Manejo de la excepción
         }
     }
 
 
     /**
-     * @author Adrián Ruiz Sánchez
-     * @param event
+     * Cambia la vista a la página principal de la aplicación.
+     *
+     * @param event El evento de clic del botón.
+     * @author Adrián Ruiz
      */
     @FXML
     public void showHome(ActionEvent event) {
@@ -99,14 +118,19 @@ public class StopControllerAdmin {
             Scene scene = new Scene(lineViewAdmin);
             stage.setScene(scene);
             stage.show();
+
         } catch (IOException e) {
+            String errorMessage = "Error en la base de datos: " + e.getMessage();
+            errorController.showErrorView(errorMessage);
             e.printStackTrace();
         }
     }
 
     /**
-     * @author Adrián Ruiz Sánchez
-     * @param event
+     * Actualiza la vista de paradas administrativas.
+     *
+     * @param event El evento de clic del botón.
+     * @author Adrián Ruiz
      */
     @FXML
     public void refreshLineView(ActionEvent event) {
@@ -117,11 +141,18 @@ public class StopControllerAdmin {
             Scene scene = new Scene(stopViewAdmin);
             stage.setScene(scene);
             stage.show();
+
         } catch (IOException e) {
+            String errorMessage = "Error en la base de datos: " + e.getMessage();
+            errorController.showErrorView(errorMessage);
             e.printStackTrace();
         }
     }
 
+    /**
+     * Actualiza el estado del botón de eliminación en función de si se ha seleccionado una parada.
+     * @author Adrián Ruiz
+     */
     @FXML
     private void updateDeleteButtonState() {
         Stop selectedStop = tableViewStops.getSelectionModel().getSelectedItem();
@@ -131,8 +162,10 @@ public class StopControllerAdmin {
 
 
     /**
-     * @author Adrián Ruiz Sánchez
-     * @throws SQLException
+     * Agrega una nueva parada a la base de datos y actualiza la lista y la tabla visual.
+     *
+     * @throws SQLException Si ocurre un error al acceder a la base de datos.
+     * @author Adrián Ruiz
      */
     @FXML
     public void addStop() throws SQLException {
@@ -147,8 +180,10 @@ public class StopControllerAdmin {
 
 
     /**
-     * @author Adrián Ruiz Sánchez
-     * @throws SQLException
+     * Actualiza el nombre de una parada seleccionada en la base de datos y actualiza la lista y la tabla visual.
+     *
+     * @throws SQLException Si ocurre un error al acceder a la base de datos.
+     * @author Adrián Ruiz
      */
     @FXML
     public void updateStop() throws SQLException {
@@ -163,8 +198,10 @@ public class StopControllerAdmin {
     }
 
     /**
-     * @author Adrián Ruiz Sánchez
-     * @throws SQLException
+     * Elimina una parada seleccionada de la base de datos y actualiza la lista y la tabla visual.
+     *
+     * @throws SQLException Si ocurre un error al acceder a la base de datos.
+     * @author Adrián Ruiz
      */
     @FXML
     public void deleteStop() throws SQLException {
@@ -179,6 +216,10 @@ public class StopControllerAdmin {
         tableViewStops.refresh();
     }
 
+    /**
+     * Muestra información sobre las líneas asociadas a una parada seleccionada.
+     * @author Adrián Ruiz
+     */
     @FXML
     public void infoLinesByStop() {
         Stop selectedStop = tableViewStops.getSelectionModel().getSelectedItem();
@@ -189,25 +230,23 @@ public class StopControllerAdmin {
 
                 LinesByStopController controller = loader.getController();
                 controller.setConnection(con);
-                controller.setLineDAO(new LineDAO(con));
+                controller.setLineDAO(new LineDAO());
                 controller.setSelectedStop(selectedStop);
 
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
                 stage.show();
+
             } catch (IOException e) {
+                String errorMessage = "Error en la base de datos: " + e.getMessage();
+                errorController.showErrorView(errorMessage);
                 e.printStackTrace();
             }
         }
     }
 
-    /*
-    @FXML
-    public void info
-
-     */
-
     /**
+     * Busca una parada por su ID en la base de datos y muestra sus detalles en la interfaz.
      * @author Adrián Ruiz Sánchez
      */
     @FXML
@@ -225,9 +264,15 @@ public class StopControllerAdmin {
                 } else {
                     System.out.println("No se encontró ninguna parada con el ID proporcionado");
                 }
+
             } catch (NumberFormatException e) {
+                String errorMessage = "Error en la base de datos: " + e.getMessage();
+                errorController.showErrorView(errorMessage);
                 e.printStackTrace();
+
             } catch (SQLException e) {
+                String errorMessage = "Error en la base de datos: " + e.getMessage();
+                errorController.showErrorView(errorMessage);
                 e.printStackTrace();
             }
         } else {
@@ -237,6 +282,7 @@ public class StopControllerAdmin {
 
 
     /**
+     * Limpia los campos de entrada de texto en la interfaz.
      * @author Adrián Ruiz Sánchez
      */
     private void clearInputFields() {
