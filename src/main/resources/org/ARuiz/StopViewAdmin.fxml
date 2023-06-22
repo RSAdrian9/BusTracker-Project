@@ -26,7 +26,6 @@
         <Button fx:id="btnAdd" layoutX="793.0" layoutY="367.0" mnemonicParsing="false" onAction="#addStop" prefHeight="34.0" prefWidth="82.0" style="-fx-background-color: #96ff96;" text="Add Stop" />
         <Button fx:id="btnDelete" layoutX="793.0" layoutY="506.0" mnemonicParsing="false" onAction="#deleteStop" prefHeight="34.0" prefWidth="82.0" style="-fx-background-color: #ff6262;" text="Delete" />
         <Button fx:id="btnUpdate" layoutX="793.0" layoutY="438.0" mnemonicParsing="false" onAction="#updateStop" prefHeight="34.0" prefWidth="82.0" style="-fx-background-color: #7272ff;" text="Update" />
-        <Label fx:id="lbl_idAdmin" layoutX="768.0" layoutY="29.0" prefHeight="26.0" prefWidth="118.0" text="ID Admin" textAlignment="CENTER" />
         <TextField fx:id="txtfld_name" layoutX="649.0" layoutY="300.0" prefHeight="26.0" prefWidth="227.0" />
         <TextField fx:id="txtfld_searchId" layoutX="697.0" layoutY="151.0" prefHeight="26.0" prefWidth="82.0" />
         <Button fx:id="btnSearch" layoutX="649.0" layoutY="151.0" mnemonicParsing="false" onAction="#searchIdStop" prefHeight="26.0" prefWidth="32.0" text="🔍" />

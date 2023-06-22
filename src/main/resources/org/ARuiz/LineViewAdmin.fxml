@@ -38,15 +38,11 @@
          <font>
             <Font name="Open Sans" size="12.0" />
          </font></Button>
-        <Label fx:id="lbl_idAdmin" layoutX="768.0" layoutY="29.0" prefHeight="26.0" prefWidth="118.0" text="ID Admin" textAlignment="CENTER">
-         <font>
-            <Font name="Open Sans" size="12.0" />
-         </font></Label>
         <TextField fx:id="txtfld_name" layoutX="642.0" layoutY="225.0" prefHeight="26.0" prefWidth="234.0" />
         <Label layoutX="642.0" layoutY="198.0" text="Name" />
         <TextField fx:id="txtfld_place" layoutX="641.0" layoutY="287.0" prefHeight="26.0" prefWidth="82.0" />
         <Label layoutX="644.0" layoutY="260.0" text="Place" />
-      <Button layoutX="640.0" layoutY="411.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="67.0" style="-fx-background-color: #96ff96;" text="Add Stop" />
+      <Button fx:id="addStop" layoutX="640.0" layoutY="411.0" mnemonicParsing="false" onAction="#addStopToLine" prefHeight="34.0" prefWidth="67.0" style="-fx-background-color: #96ff96;" text="Add Stop" />
       <Button fx:id="btnInfo" layoutX="640.0" layoutY="337.0" mnemonicParsing="false" onAction="#infoStopsByLine" prefHeight="34.0" prefWidth="67.0" style="-fx-background-color: #7272ff;" text="ℹnfo">
          <font>
             <Font name="Open Sans" size="12.0" />

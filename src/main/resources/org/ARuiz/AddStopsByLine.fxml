@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ARuiz.AddStopsByLineController">
+   <children>
+      <ChoiceBox fx:id="choiceBoxStops" layoutX="392.0" layoutY="145.0" prefWidth="150.0" />
+      <Label layoutX="67.0" layoutY="144.0" prefHeight="26.0" prefWidth="26.0" text="Line" textAlignment="CENTER" />
+
+      <Button fx:id="addStop" layoutX="477.0" layoutY="296.0" onAction="#addStopToLine" text="Add Stop" />
+   </children>
+</AnchorPane>
