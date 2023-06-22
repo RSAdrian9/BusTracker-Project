@@ -12,6 +12,7 @@ import java.util.List;
      * @param <T> El tipo de entidad con la que se trabaja en el DAO.
      * @author Adrián Ruiz
      */
+
 public interface DAO<T> extends AutoCloseable {
     /**
      * Recupera todas las entidades de la base de datos.

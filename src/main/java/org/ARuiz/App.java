@@ -24,6 +24,7 @@ public class App extends Application {
      * @throws IOException Si ocurre un error al cargar el archivo FXML de la vista inicial.
      * @author Adrián Ruiz
      */
+
     @Override
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("LoginView"), 400, 560);
@@ -38,6 +39,7 @@ public class App extends Application {
      * @throws IOException Si ocurre un error al cargar el archivo FXML de la vista.
      * @author Adrián Ruiz
      */
+
     public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
@@ -50,6 +52,7 @@ public class App extends Application {
      * @throws IOException Si ocurre un error al cargar el archivo FXML de la vista.
      * @author Adrián Ruiz
      */
+
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
