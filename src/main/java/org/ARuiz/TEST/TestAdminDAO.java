@@ -16,7 +16,7 @@ public class TestAdminDAO {
         try (Connection con = DriverManager.getConnection(url, user, pwd)) {
 
             AdminDAO adminDAO = new AdminDAO(con);
-            /*
+
             // Insertar un nuevo administrador
             Admin newAdmin = new Admin();
             newAdmin.setUser("Adrian");
@@ -38,7 +38,7 @@ public class TestAdminDAO {
 
             // Imprimir un párrafo en blanco
             System.out.println();
-            */
+
             // Obtener administrador por ID
             int id_admin = 18;
             Admin foundAdmin = adminDAO.findById(Integer.valueOf(id_admin));
@@ -54,10 +54,10 @@ public class TestAdminDAO {
 
             // Imprimir un párrafo en blanco
             System.out.println();
-            /*
+
             // Eliminar administrador
             adminDAO.delete(foundAdmin);
-            System.out.println("Administrador eliminado: " + foundAdmin);*/
+            System.out.println("Administrador eliminado: " + foundAdmin);
         } catch (Exception e) {
             e.printStackTrace();
         }

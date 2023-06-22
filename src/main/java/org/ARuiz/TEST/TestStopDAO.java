@@ -19,6 +19,7 @@ public class TestStopDAO {
             StopDAO stopDAO = new StopDAO(con);
             LineDAO lineDAO = new LineDAO(con);
 
+
             // Prueba de findAll()
             List<Stop> stops = stopDAO.findAll();
             System.out.println("Paradas encontradas:");
@@ -36,7 +37,7 @@ public class TestStopDAO {
             } else {
                 System.out.println("No se encontró ninguna parada con ID " + id);
             }
-            /*
+
             // Prueba de findLinesByStop()
             int stopId = 1; // ID de la parada para buscar las líneas
             List<Line> linesByStop = lineDAO.findLinesByStop(stopId);
@@ -49,7 +50,12 @@ public class TestStopDAO {
                 System.out.println("No se encontraron líneas que pasen por la parada con ID " + stopId);
             }
 
-             */
+            /*
+            // Prueba de getAllStopNames()
+            List<String> allStopNames = StopDAO.getAllStopNames();
+            for (String stopName : allStopNames) {
+                System.out.println(stopName);
+            } */
 
             // Prueba de findStopsByLine()
             int lineId = 1; // ID de la línea para buscar las paradas
@@ -63,7 +69,6 @@ public class TestStopDAO {
                 System.out.println("No se encontraron paradas asociadas a la línea con ID " + lineId);
             }
 
-            // Resto del código...
 
         } catch (Exception e) {
             e.printStackTrace();
