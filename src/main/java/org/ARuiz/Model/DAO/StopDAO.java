@@ -20,7 +20,8 @@ public class StopDAO implements DAO<Stop> {
 
     private final static String FINDSTOPSBYLINE = "SELECT s.id_stop, s.name FROM stop s JOIN line_stop ls ON s.id_stop = ls.id_stop WHERE ls.id_bus = ?";
 
-    private Connection con;
+    private final static String INFOSTOPS = "SELECT id_stop, name FROM stop"; // Consultar paradas existentes
+    private static Connection con;
 
     /**
      * Constructor de la clase StopDAO que utiliza la conexión por defecto.
@@ -30,6 +31,10 @@ public class StopDAO implements DAO<Stop> {
         if (this.con == null) {
             throw new IllegalStateException("Error: Connection is null");
         }
+    }
+
+    public StopDAO() {
+
     }
 
     /**
@@ -43,9 +48,10 @@ public class StopDAO implements DAO<Stop> {
 
 
     /**
-     * @author Adrián Ruiz Sánchez
-     * @return stops
-     * @throws SQLException
+     * Recupera todas las paradas existentes.
+     *
+     * @return Una lista de objetos Stop que representa todas las paradas.
+     * @throws SQLException Si ocurre algún error al ejecutar la consulta SQL.
      */
     @Override
     public List<Stop> findAll() throws SQLException {
@@ -68,10 +74,11 @@ public class StopDAO implements DAO<Stop> {
     }
 
     /**
-     * @author Adrián Ruiz Sánchez
-     * @param id
-     * @return stop
-     * @throws SQLException
+     * Recupera una parada por su ID.
+     *
+     * @param id El ID de la parada a buscar.
+     * @return El objeto Stop que representa la parada encontrada, o null si no se encuentra.
+     * @throws SQLException Si ocurre algún error al ejecutar la consulta SQL.
      */
 
     @Override
@@ -100,7 +107,13 @@ public class StopDAO implements DAO<Stop> {
         return stop;
     }
 
-
+    /**
+     * Recupera todas las paradas asociadas a una línea de autobús.
+     *
+     * @param lineId El ID de la línea de autobús.
+     * @return Una lista de objetos Stop que representa las paradas asociadas a la línea.
+     * @throws SQLException Si ocurre algún error al ejecutar la consulta SQL.
+     */
     public List<Stop> findStopsByLine(int lineId) throws SQLException {
         List<Stop> stops = new ArrayList<>();
         try (PreparedStatement pst = con.prepareStatement(FINDSTOPSBYLINE)) {
@@ -120,10 +133,11 @@ public class StopDAO implements DAO<Stop> {
 
 
     /**
-     * @author Adrián Ruiz Sánchez
-     * @param entity
-     * @return entity
-     * @throws SQLException
+     * Inserta una nueva parada en la base de datos.
+     *
+     * @param entity El objeto Stop que representa la parada a insertar.
+     * @return El objeto Stop que representa la parada insertada.
+     * @throws SQLException Si ocurre algún error al ejecutar la consulta SQL.
      */
     @Override
     public Stop insert(Stop entity) throws SQLException {
@@ -144,10 +158,11 @@ public class StopDAO implements DAO<Stop> {
     }
 
     /**
-     * @param entity
-     * @return entity
-     * @throws SQLException
-     * @author Adrián Ruiz Sánchez
+     * Elimina una parada de la base de datos.
+     *
+     * @param entity El objeto Stop que representa la parada a eliminar.
+     * @return El objeto Stop que representa la parada eliminada.
+     * @throws SQLException Si ocurre algún error al ejecutar la consulta SQL.
      */
     @Override
     public Stop delete(Stop entity) throws SQLException {
@@ -159,10 +174,11 @@ public class StopDAO implements DAO<Stop> {
     }
 
     /**
-     * @author Adrián Ruiz Sánchez
-     * @param entity
-     * @return entity
-     * @throws SQLException
+     * Actualiza una parada en la base de datos.
+     *
+     * @param entity El objeto Stop que representa la parada a actualizar.
+     * @return El objeto Stop que representa la parada actualizada.
+     * @throws SQLException Si ocurre algún error al ejecutar la consulta SQL.
      */
     @Override
     public Stop update(Stop entity) throws SQLException {
@@ -175,10 +191,11 @@ public class StopDAO implements DAO<Stop> {
     }
 
     /**
-     * @author Adrián Ruiz Sánchez
-     * @param name
-     * @return null
-     * @throws SQLException
+     * Busca una parada por su nombre.
+     *
+     * @param name El nombre de la parada a buscar.
+     * @return El objeto Stop que representa la parada encontrada, o null si no se encuentra.
+     * @throws SQLException Si ocurre algún error al ejecutar la consulta SQL.
      */
     private Stop findByName(String name) throws SQLException {
         try (PreparedStatement pst = con.prepareStatement(FINDBYNAME)) {
@@ -194,8 +211,37 @@ public class StopDAO implements DAO<Stop> {
     }
 
     /**
-     * @author Adrián Ruiz Sánchez
-     * @throws Exception
+     * Recupera todos los nombres de las paradas existentes.
+     *
+     * @return Una lista de objetos Stop que representa los nombres de todas las paradas.
+     * @throws SQLException Si ocurre algún error al ejecutar la consulta SQL.
+     */
+    public static List<Stop> getAllStopNames() throws SQLException {
+        List<Stop> stops = new ArrayList<>();
+
+        try (PreparedStatement statement = con.prepareStatement(INFOSTOPS);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                Stop nuevo = new Stop();
+                nuevo.setName(resultSet.getString("name"));
+                nuevo.setId_stop(resultSet.getInt("id_stop"));
+                stops.add(nuevo);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }
+
+        return stops;
+    }
+
+
+    /**
+     * Cierra la conexión a la base de datos.
+     *
+     * @throws Exception Si ocurre algún error al cerrar la conexión.
      */
     @Override
     public void close() throws Exception {
