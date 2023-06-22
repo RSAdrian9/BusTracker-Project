@@ -10,6 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.ARuiz.App;
 import org.ARuiz.Model.Connections.ConnectionMySQL;
 import org.ARuiz.Model.DAO.AdminDAO;
@@ -22,21 +23,39 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * El controlador de la vista de inicio de sesión.
+ * Esta clase se encarga de manejar la lógica relacionada con la autenticación de usuarios.
+ * Permite validar las credenciales de inicio de sesión, redirigir a la página principal en caso de éxito
+ * y mostrar mensajes de error en caso de credenciales incorrectas.
+ * @author Adrián Ruiz
+ */
 public class LoginController {
     @FXML
     private TextField txtfld_username;
 
     @FXML
     private PasswordField txtfld_password;
-
     private Connection connection;
 
-
+    /**
+     * Inicializa el controlador.
+     * Establece la conexión a la base de datos.
+     * @author Adrián Ruiz
+     */
     public void initialize() {
         // Establecer la conexión a la base de datos
         connection = ConnectionMySQL.getConnect();
     }
 
+    /**
+     * Método que se ejecuta al hacer clic en el botón de validación de inicio de sesión.
+     * Valida las credenciales ingresadas por el usuario y redirige a la página principal en caso de éxito.
+     * Muestra un mensaje de error en caso de credenciales incorrectas.
+     *
+     * @throws IOException Si ocurre un error al cargar la vista de error.
+     * @author Adrián Ruiz
+     */
     @FXML
     private void btnLoginValidate() throws IOException {
         if (!txtfld_username.getText().isEmpty() && !txtfld_password.getText().isEmpty()) {
@@ -48,13 +67,24 @@ public class LoginController {
             boolean validPassword = Utils.validatePassword(password);
 
             if (validUsername && validPassword) {
-                // Las credenciales son válidas, realizar acciones adicionales
-                // Ejemplo: Acceder a la página principal de la aplicación
                 App.setRoot("HomeView");
             } else {
-                // Las credenciales no son válidas, mostrar un mensaje de error o realizar otra acción
-                // Ejemplo: Mostrar un mensaje de error indicando que las credenciales son incorrectas
-                System.out.println("Credenciales incorrectas");
+                // Las credenciales no son válidas, mostrar un mensaje de error en la vista
+                String errorMessage = "❌ Credenciales incorrectas ❌";
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("ErrorMessageView.fxml"));
+                Parent root = loader.load();
+                ErrorMessageController errorController = loader.getController();
+                errorController.setErrorLabel(errorMessage);
+
+                // Obtén la referencia al escenario actual
+                Stage currentStage = (Stage) txtfld_username.getScene().getWindow();
+
+                // Crea un nuevo escenario para la vista de error
+                Stage errorStage = new Stage();
+                errorStage.initOwner(currentStage); // Establece el escenario actual como propietario del nuevo escenario
+                errorStage.initStyle(StageStyle.UNDECORATED); // Quitar decoraciones de la ventana
+                errorStage.setScene(new Scene(root));
+                errorStage.show();
             }
         }
     }
@@ -74,7 +104,13 @@ public class LoginController {
         } */
 
 
-
+    /**
+     * Método que se ejecuta al hacer clic en el botón de registro.
+     * Carga la vista de registro desde su archivo FXML y muestra la ventana correspondiente.
+     *
+     * @param event El evento de acción que desencadena el método.
+     * @author Adrián Ruiz
+     */
     @FXML
     private void btnSignupValidate(ActionEvent event) {
         try {
@@ -105,7 +141,7 @@ public class LoginController {
         }
      */
 
-
+    /*
     private boolean authenticateUser(String user, String password) {
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM admin WHERE user = ? AND password = ?");
@@ -143,6 +179,8 @@ public class LoginController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+     */
 
 }
 
